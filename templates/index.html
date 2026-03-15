@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BekiLang Studio ✨</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Pacifico&display=swap" rel="stylesheet">
+    <!-- Main Style -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="glow-bg"></div>
+    <div class="sparkles">✨ 💋 💅 🦋 ✨</div>
+    <div class="app-container">
+        <header>
+            <h1>BekiLang Studio</h1>
+            <p class="subtitle">Where your code struts its stuff, Mhiema!</p>
+        </header>
+
+        <main class="editor-workspace">
+            <div class="editor-panel panel">
+                <div class="panel-header">
+                    <h2>✏️ The Burn Book (CodeEditor)</h2>
+                    <div class="window-controls">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                    </div>
+                </div>
+                <div class="editor-main">
+                    <div class="line-numbers" id="lineNumbers">1</div>
+                    <textarea id="codeInput" spellcheck="false" placeholder="chika greeting ay 'Hello, mga Accla!' periodt..."></textarea>
+                </div>
+            </div>
+
+            <div class="console-panel panel">
+                <div class="panel-header">
+                    <h2>📺 Ang Chika (Terminal)</h2>
+                    <div class="console-actions">
+                        <button id="clearBtn" class="glass-btn">Clear Screen 🧽</button>
+                        <button id="runBtn" class="glamour-btn">Run Code ✨</button>
+                    </div>
+                </div>
+                <div id="consoleOutput" class="console-output">Waiting for the tea... ☕</div>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
