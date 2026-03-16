@@ -3,134 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BekiLang Studio ✨</title>
+    <title>BekiLang Studio 💋✨</title>
+    <meta name="description" content="BekiLang Studio — a fierce, glamorous code playground for the Filipino gay lingo programming language.">
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Pacifico&display=swap" rel="stylesheet">
     <!-- Main Style -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+    <!-- Background Layers -->
     <div class="glow-bg"></div>
-    <div class="sparkles">✨ 💋 💅 🦋 ✨</div>
+    <div class="animated-gradient-bg"></div>
+    <div class="noise-overlay"></div>
+
+    <!-- Floating Sparkles -->
+    <div class="sparkles star-1">✨</div>
+    <div class="sparkles star-2">💋</div>
+    <div class="sparkles star-3">💅</div>
+    <div class="sparkles star-4">🦋</div>
+
     <div class="app-container">
+        <!-- ═══ Header ═══ -->
         <header>
             <h1>BekiLang Studio</h1>
             <p class="subtitle">Where your code struts its stuff, Mhiema!</p>
+            <span class="tagline-badge">Philippine Gay Lingo × Programming</span>
         </header>
 
+        <!-- ═══ Action Buttons ═══ -->
+        <div class="dashboard-actions">
+            <button id="clearBtn" class="glass-btn">Linis Muna! 🧽</button>
+            <button id="runBtn" class="glamour-btn">Slay Ko 'To! ✨</button>
+        </div>
+
+        <!-- ═══ Editor Workspace ═══ -->
         <main class="editor-workspace">
-            <div class="left-column">
-                <div class="editor-panel panel">
-                    <div class="panel-header">
-                        <h2>✏️ The Burn Book (CodeEditor)</h2>
-                        <div class="window-controls">
-                            <span class="dot red"></span>
-                            <span class="dot yellow"></span>
-                            <span class="dot green"></span>
+            <!-- Top: The Burn Book (Code Editor, full width) -->
+            <div class="top-row">
+                <div class="hologram-wrapper">
+                    <div class="editor-panel panel glossy-glass">
+                        <div class="panel-header fierce-header">
+                            <h2>✏️ The Burn Book</h2>
+                            <div class="window-controls">
+                                <span class="dot diamond pink"></span>
+                                <span class="dot diamond cyan"></span>
+                                <span class="dot diamond gold"></span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="editor-main">
-                        <div class="line-numbers" id="lineNumbers">1</div>
-                        <textarea id="codeInput" spellcheck="false" placeholder="chika greeting ay 'Hello, mga Accla!' periodt..."></textarea>
+                        <div class="editor-main frosted">
+                            <div class="line-numbers highlighter" id="lineNumbers">1</div>
+                            <textarea id="codeInput" spellcheck="false" placeholder="chika greeting ay 'Hello, mga Accla!' periodt..."></textarea>
+                        </div>
+                        <div class="status-indicator">
+                            <span class="status-dot"></span>
+                            <span>Ready to slay</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="right-column dashboard-grid">
-                <div class="dashboard-actions">
-                    <button id="clearBtn" class="glass-btn">Clear Screen 🧽</button>
-                    <button id="runBtn" class="glamour-btn">Run Code ✨</button>
-                </div>
+            <!-- Bottom: Tabbed Output Panel -->
+            <div class="bottom-row">
+                <div class="output-tabs-panel panel">
+                    <div class="panel-header cyber-header">
+                        <h2>📺 Output Lounge</h2>
+                    </div>
 
-                <div class="console-panel panel">
-                    <div class="panel-header">
-                        <h2>📺 Ang Chika (Terminal)</h2>
+                    <!-- Tab Bar -->
+                    <div class="tab-bar" role="tablist">
+                        <button class="tab-btn active" data-tab="console" role="tab" aria-selected="true" id="tab-console">
+                            📺 Ang Chika
+                        </button>
+                        <button class="tab-btn" data-tab="analysis" role="tab" aria-selected="false" id="tab-analysis">
+                            🔍 Analysis
+                        </button>
+                        <button class="tab-btn" data-tab="symbols" role="tab" aria-selected="false" id="tab-symbols">
+                            📊 Symbol Table
+                        </button>
+                        <button class="tab-btn" data-tab="story" role="tab" aria-selected="false" id="tab-story">
+                            📖 Story Time
+                        </button>
                     </div>
-                    <div id="consoleOutput" class="console-output">Waiting for the tea... ☕</div>
-                </div>
 
-                <div class="analysis-panel panel">
-                    <div class="panel-header">
-                        <h2>🔍 Under the Hood (Analysis)</h2>
-                    </div>
-                    <div id="analysisOutput" class="console-output">Waiting for analysis...</div>
-                </div>
+                    <!-- Tab Content Area -->
+                    <div class="tab-content-area">
+                        <!-- Console -->
+                        <div class="tab-pane active" id="pane-console" role="tabpanel">
+                            <div id="consoleOutput" class="console-output crt-text">Waiting for the tea... ☕</div>
+                        </div>
 
-                <div class="symbol-table-panel panel">
-                    <div class="panel-header">
-                        <h2>📊 Symbol Table (Memory Map)</h2>
-                    </div>
-                    <div class="table-container">
-                        <table class="beki-table" id="symbolTable">
-                            <thead>
-                                <tr>
-                                    <th>Identifier</th>
-                                    <th>Data Type</th>
-                                    <th>Level</th>
-                                    <th>Offset</th>
-                                </tr>
-                            </thead>
-                            <tbody id="symbolTableBody">
-                                <tr><td colspan="4">No variables declared yet.</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                        <!-- Analysis -->
+                        <div class="tab-pane" id="pane-analysis" role="tabpanel">
+                            <div id="analysisOutput" class="console-output crt-text">Waiting for analysis...</div>
+                        </div>
 
-                <div class="story-panel panel">
-                    <div class="panel-header">
-                        <h2>📖 Story Time (Explainability)</h2>
+                        <!-- Symbol Table -->
+                        <div class="tab-pane" id="pane-symbols" role="tabpanel">
+                            <div class="table-container crt-text">
+                                <table class="beki-table" id="symbolTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Identifier</th>
+                                            <th>Data Type</th>
+                                            <th>Level</th>
+                                            <th>Offset</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="symbolTableBody">
+                                        <tr><td colspan="4">No variables declared yet.</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Story Time -->
+                        <div class="tab-pane" id="pane-story" role="tabpanel">
+                            <div id="storyOutput" class="console-output crt-text">Waiting for the tea...</div>
+                        </div>
                     </div>
-                    <div id="storyOutput" class="console-output">Waiting for the tea...</div>
                 </div>
+            </div>
         </main>
 
+        <!-- ═══ Cheat Sheet ═══ -->
         <section class="cheat-sheet-section">
-            <h2 class="cheat-title">💅 The BekiLang Cheat Sheet 💅</h2>
-            <div class="cheat-grid">
+            <h2 class="cheat-title neon-sign">💅 The BekiLang Cheat Sheet 💅</h2>
+            <div class="cheat-scroll-container">
                 <!-- Data Types -->
-                <div class="cheat-card">
-                    <h3>1. Data Types & Declarations</h3>
+                <div class="cheat-card polaroid heavy-tape">
+                    <h3>1. Data Types</h3>
                     <ul>
                         <li><span class="keyword">borta</span> (Integer) - <em>Whole numbers</em></li>
-                        <li><span class="keyword">mema</span> (Float) - <em>Decimal numbers</em></li>
-                        <li><span class="keyword">chika</span> (String) - <em>Text in quotes ""</em></li>
-                        <li><span class="keyword">charot</span> (Char) - <em>Single character ''</em></li>
-                        <li><span class="keyword">truch</span> (Boolean) - <em><span class="keyword">korik</span> (True) / <span class="keyword">wiz</span> (False)</em></li>
+                        <li><span class="keyword">mema</span> (Float) - <em>Decimals</em></li>
+                        <li><span class="keyword">chika</span> (String) - <em>Text ""</em></li>
+                        <li><span class="keyword">charot</span> (Char) - <em>Single ''</em></li>
+                        <li><span class="keyword">truch</span> (Bool) - <em><span class="keyword">korik</span> / <span class="keyword">wiz</span></em></li>
                     </ul>
                 </div>
 
                 <!-- Operators -->
-                <div class="cheat-card">
-                    <h3>2. Operators & Delimiters</h3>
+                <div class="cheat-card polaroid heavy-tape">
+                    <h3>2. Operators</h3>
                     <ul>
-                        <li><span class="keyword">ay</span> = Assignment (<em>var ay 5</em>)</li>
-                        <li><span class="keyword">periodt</span> / <span class="keyword">ganern</span> = Statement Delimiter (;)</li>
-                        <li><span class="keyword">parinig</span> = Print / Output Console</li>
+                        <li><span class="keyword">ay</span> = Assign (<em>x ay 5</em>)</li>
+                        <li><span class="keyword">periodt</span> / <span class="keyword">ganern</span> = ;</li>
+                        <li><span class="keyword">parinig</span> = Print</li>
                     </ul>
                 </div>
 
                 <!-- Logic -->
-                <div class="cheat-card">
-                    <h3>3. Arithmetic & Logic</h3>
+                <div class="cheat-card polaroid heavy-tape">
+                    <h3>3. Math & Logic</h3>
                     <ul>
-                        <li>Math: <span class="keyword">dagdag</span> (+), <span class="keyword">bawas</span> (-)<br><span class="keyword">times</span> (*), <span class="keyword">divide</span> (/)</li>
-                        <li>Compare: <span class="keyword">mas_tarush</span> (>), <span class="keyword">mas_chaka</span> (<)<br><span class="keyword">parehas</span> (==), <span class="keyword">wit_parehas</span> (!=)</li>
-                        <li>Boolean: <span class="keyword">at_saka</span> (AND), <span class="keyword">o_kaya</span> (OR)</li>
+                        <li><span class="keyword">dagdag</span> (+), <span class="keyword">bawas</span> (-)</li>
+                        <li><span class="keyword">times</span> (*), <span class="keyword">divide</span> (/)</li>
+                        <li><span class="keyword">mas_tarush</span> (>), <span class="keyword">mas_chaka</span> (<)</li>
+                        <li><span class="keyword">parehas</span> (==), <span class="keyword">wit_parehas</span> (!=)</li>
+                        <li><span class="keyword">at_saka</span> (AND), <span class="keyword">o_kaya</span> (OR)</li>
                     </ul>
                 </div>
 
                 <!-- Control Flow -->
-                <div class="cheat-card">
-                    <h3>4. Control Flow (Loops & Ifs)</h3>
+                <div class="cheat-card polaroid heavy-tape">
+                    <h3>4. Control Flow</h3>
                     <ul>
-                        <li><span class="keyword">kunwari</span> [cond] <span class="keyword">eh_di</span> [cond] = <em>If / Else statement</em></li>
-                        <li><span class="keyword">gorabel</span> [cond] { ... } = <em>While Loop</em></li>
+                        <li><span class="keyword">kunwari</span> [cond] <span class="keyword">eh_di</span> [cond]</li>
+                        <li><em>(If / Else)</em></li>
+                        <li><span class="keyword">gorabel</span> [cond] { ... }</li>
+                        <li><em>(While Loop)</em></li>
                     </ul>
                 </div>
             </div>
         </section>
     </div>
+
+    <!-- Custom Kiss Cursor -->
+    <div id="custom-cursor" class="custom-cursor">💋</div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
