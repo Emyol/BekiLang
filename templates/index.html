@@ -83,8 +83,53 @@
                     </div>
                     <div id="storyOutput" class="console-output">Waiting for the tea...</div>
                 </div>
-            </div>
         </main>
+
+        <section class="cheat-sheet-section">
+            <h2 class="cheat-title">💅 The BekiLang Cheat Sheet 💅</h2>
+            <div class="cheat-grid">
+                <!-- Data Types -->
+                <div class="cheat-card">
+                    <h3>1. Data Types & Declarations</h3>
+                    <ul>
+                        <li><span class="keyword">borta</span> (Integer) - <em>Whole numbers</em></li>
+                        <li><span class="keyword">mema</span> (Float) - <em>Decimal numbers</em></li>
+                        <li><span class="keyword">chika</span> (String) - <em>Text in quotes ""</em></li>
+                        <li><span class="keyword">charot</span> (Char) - <em>Single character ''</em></li>
+                        <li><span class="keyword">truch</span> (Boolean) - <em><span class="keyword">korik</span> (True) / <span class="keyword">wiz</span> (False)</em></li>
+                    </ul>
+                </div>
+
+                <!-- Operators -->
+                <div class="cheat-card">
+                    <h3>2. Operators & Delimiters</h3>
+                    <ul>
+                        <li><span class="keyword">ay</span> = Assignment (<em>var ay 5</em>)</li>
+                        <li><span class="keyword">periodt</span> / <span class="keyword">ganern</span> = Statement Delimiter (;)</li>
+                        <li><span class="keyword">parinig</span> = Print / Output Console</li>
+                    </ul>
+                </div>
+
+                <!-- Logic -->
+                <div class="cheat-card">
+                    <h3>3. Arithmetic & Logic</h3>
+                    <ul>
+                        <li>Math: <span class="keyword">dagdag</span> (+), <span class="keyword">bawas</span> (-)<br><span class="keyword">times</span> (*), <span class="keyword">divide</span> (/)</li>
+                        <li>Compare: <span class="keyword">mas_tarush</span> (>), <span class="keyword">mas_chaka</span> (<)<br><span class="keyword">parehas</span> (==), <span class="keyword">wit_parehas</span> (!=)</li>
+                        <li>Boolean: <span class="keyword">at_saka</span> (AND), <span class="keyword">o_kaya</span> (OR)</li>
+                    </ul>
+                </div>
+
+                <!-- Control Flow -->
+                <div class="cheat-card">
+                    <h3>4. Control Flow (Loops & Ifs)</h3>
+                    <ul>
+                        <li><span class="keyword">kunwari</span> [cond] <span class="keyword">eh_di</span> [cond] = <em>If / Else statement</em></li>
+                        <li><span class="keyword">gorabel</span> [cond] { ... } = <em>While Loop</em></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
     </div>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
