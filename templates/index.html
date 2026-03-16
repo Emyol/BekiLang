@@ -19,30 +19,70 @@
         </header>
 
         <main class="editor-workspace">
-            <div class="editor-panel panel">
-                <div class="panel-header">
-                    <h2>✏️ The Burn Book (CodeEditor)</h2>
-                    <div class="window-controls">
-                        <span class="dot red"></span>
-                        <span class="dot yellow"></span>
-                        <span class="dot green"></span>
+            <div class="left-column">
+                <div class="editor-panel panel">
+                    <div class="panel-header">
+                        <h2>✏️ The Burn Book (CodeEditor)</h2>
+                        <div class="window-controls">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
                     </div>
-                </div>
-                <div class="editor-main">
-                    <div class="line-numbers" id="lineNumbers">1</div>
-                    <textarea id="codeInput" spellcheck="false" placeholder="chika greeting ay 'Hello, mga Accla!' periodt..."></textarea>
+                    <div class="editor-main">
+                        <div class="line-numbers" id="lineNumbers">1</div>
+                        <textarea id="codeInput" spellcheck="false" placeholder="chika greeting ay 'Hello, mga Accla!' periodt..."></textarea>
+                    </div>
                 </div>
             </div>
 
-            <div class="console-panel panel">
-                <div class="panel-header">
-                    <h2>📺 Ang Chika (Terminal)</h2>
-                    <div class="console-actions">
-                        <button id="clearBtn" class="glass-btn">Clear Screen 🧽</button>
-                        <button id="runBtn" class="glamour-btn">Run Code ✨</button>
+            <div class="right-column dashboard-grid">
+                <div class="dashboard-actions">
+                    <button id="clearBtn" class="glass-btn">Clear Screen 🧽</button>
+                    <button id="runBtn" class="glamour-btn">Run Code ✨</button>
+                </div>
+
+                <div class="console-panel panel">
+                    <div class="panel-header">
+                        <h2>📺 Ang Chika (Terminal)</h2>
+                    </div>
+                    <div id="consoleOutput" class="console-output">Waiting for the tea... ☕</div>
+                </div>
+
+                <div class="analysis-panel panel">
+                    <div class="panel-header">
+                        <h2>🔍 Under the Hood (Analysis)</h2>
+                    </div>
+                    <div id="analysisOutput" class="console-output">Waiting for analysis...</div>
+                </div>
+
+                <div class="symbol-table-panel panel">
+                    <div class="panel-header">
+                        <h2>📊 Symbol Table (Memory Map)</h2>
+                    </div>
+                    <div class="table-container">
+                        <table class="beki-table" id="symbolTable">
+                            <thead>
+                                <tr>
+                                    <th>Identifier</th>
+                                    <th>Data Type</th>
+                                    <th>Level</th>
+                                    <th>Offset</th>
+                                </tr>
+                            </thead>
+                            <tbody id="symbolTableBody">
+                                <tr><td colspan="4">No variables declared yet.</td></tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div id="consoleOutput" class="console-output">Waiting for the tea... ☕</div>
+
+                <div class="story-panel panel">
+                    <div class="panel-header">
+                        <h2>📖 Story Time (Explainability)</h2>
+                    </div>
+                    <div id="storyOutput" class="console-output">Waiting for the tea...</div>
+                </div>
             </div>
         </main>
     </div>

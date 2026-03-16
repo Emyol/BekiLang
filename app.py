@@ -29,16 +29,31 @@ def run():
     new_stdout = io.StringIO()
     sys.stdout = new_stdout
     
+    result_dict = None
     try:
-        beki.run_bekilang(code)
+        result_dict = beki.run_bekilang(code, return_dict=True)
     except Exception as e:
         print(f"🔥 Oh no, server error teh! {str(e)}")
         traceback.print_exc()
     finally:
         sys.stdout = old_stdout
         
-    output = new_stdout.getvalue()
-    return jsonify({"output": output})
+    analysis_output = new_stdout.getvalue()
+    
+    if not result_dict:
+        result_dict = {
+            "status": "error",
+            "error_message": "A critical server error occurred",
+            "symbol_table": [],
+            "console": [],
+            "story_lexer": [],
+            "story_parser": [],
+            "story_semantics": []
+        }
+        
+    result_dict["analysis"] = analysis_output
+        
+    return jsonify(result_dict)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

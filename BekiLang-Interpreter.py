@@ -207,6 +207,7 @@ class Parser:
     def __init__(self, lexer):
         self.lexer = lexer
         self.current_token = self.lexer.get_next_token()
+        self.story = []
 
     def error(self, message):
         raise Exception(f"❌ Syntax Error (Linya {self.current_token.line}): Ay, shunga ka sis! Nakakaloka ang grammar! {message}. Found '{self.current_token.value}'")
@@ -257,6 +258,7 @@ class Parser:
         expr = self.expr()
         self.eat("SEMI")
         print("[PARSER] Actual structure matches expected rule perfectly.")
+        self.story.append(f"Nakita kong nag-declare ka ng variable na '{var_name}'. Bongga!")
         return VarDecl(var_type, var_name, expr)
 
     def assignment(self):
@@ -268,12 +270,14 @@ class Parser:
         expr = self.expr()
         self.eat("SEMI")
         print("[PARSER] Actual structure matches expected rule perfectly.")
+        self.story.append(f"Pinalitan mo ang laman ni '{var_name}'. Ang harot!")
         return Assign(var_name, expr)
 
     def print_statement(self):
         self.eat("PRINT")
         expr = self.expr()
         self.eat("SEMI")
+        self.story.append("Gusto mong magparinig at mag-print ng chika.")
         return Print(expr)
 
     def if_statement(self):
@@ -284,12 +288,16 @@ class Parser:
         if self.current_token.type == "ELSE":
             self.eat("ELSE")
             false_block = self.block()
+            self.story.append("Gumawa ka ng if-else condition. 'Kunwari' ganito, 'eh di' ganyan!")
+        else:
+            self.story.append("May condition ka na 'kunwari', pero walang 'eh di'. Pabebe lang!")
         return IfStmt(cond, true_block, false_block)
 
     def while_statement(self):
         self.eat("WHILE")
         cond = self.expr()
         block = self.block()
+        self.story.append("Gorabel ka sa loop! Paulit-ulit na chika hanggang mapagod.")
         return WhileStmt(cond, block)
 
     def block(self):
@@ -361,7 +369,19 @@ class Parser:
 class Interpreter:
     def __init__(self, parser):
         self.parser = parser
-        self.GLOBAL_SCOPE = {}  # Symbol table
+        self.GLOBAL_SCOPE = {}  # Value bindings
+        self.SYMBOL_TABLE_META = [] # Tracks {name, type, level, offset}
+        self.current_level = -1
+        self.offset_stack = []
+        self.story = []
+        self.console_output = []
+        
+    def get_type_size(self, var_type):
+        if var_type in ("TYPE_INT", "TYPE_FLOAT"): return 4
+        if var_type == "TYPE_DOUBLE": return 8
+        if var_type in ("TYPE_CHAR", "TYPE_STRING"): return 1
+        if var_type == "TYPE_BOOL": return 1
+        return 4
 
     def error(self, message):
         raise Exception(f"❌ Semantic Error: {message}\n🛠 Recovery Strategy: Type Coercion or Discard Assignment. (Naloka ang system!)")
@@ -375,8 +395,12 @@ class Interpreter:
         raise Exception(f"No visit_{type(node).__name__} method")
 
     def visit_Block(self, node):
+        self.current_level += 1
+        self.offset_stack.append(0) # Offset resets to 0 for inner blocks
         for stmt in node.statements:
             self.visit(stmt)
+        self.current_level -= 1
+        self.offset_stack.pop()
 
     def visit_VarDecl(self, node):
         var_name = node.var_name
@@ -409,13 +433,31 @@ class Interpreter:
             print("[SEMANTICS] Types match. No coercion needed.")
             print(f"[SEMANTICS] Binding variable '{var_name}' to Symbol Table.")
             self.GLOBAL_SCOPE[var_name] = value
+            
+            # Submitting to upgraded Symbol Table (Metadata)
+            size = self.get_type_size(t)
+            current_offset = self.offset_stack[-1]
+            # Convert type to readable string (e.g. TYPE_INT -> int)
+            readable_type = t.replace("TYPE_", "").lower()
+            
+            self.SYMBOL_TABLE_META.append({
+                "name": var_name,
+                "type": readable_type,
+                "level": self.current_level,
+                "offset": current_offset
+            })
+            self.offset_stack[-1] += size # Increment offset by data type size
+            
+            self.story.append(f"Nilagay sa memorya si '{var_name}' na may value na '{value}'. Pak ganern!")
 
     def visit_Assign(self, node):
         var_name = node.var_name
         if var_name not in self.GLOBAL_SCOPE:
             self.error(f"Who's that girl? Sino si '{var_name}'? Di ko siya kilala! I-declare mo muna sis bago mo i-assign.")
             return
-        self.GLOBAL_SCOPE[var_name] = self.visit(node.expr)
+        val = self.visit(node.expr)
+        self.GLOBAL_SCOPE[var_name] = val
+        self.story.append(f"In-update natin si '{var_name}', ang bagong chika ay '{val}'.")
 
     def visit_Var(self, node):
         var_name = node.var_name
@@ -427,9 +469,14 @@ class Interpreter:
     def visit_Print(self, node):
         value = self.visit(node.expr)
         if isinstance(value, bool):
-            print("💅 BEKI SAYS: " + ("korik" if value else "wiz"))
+            out_val = "korik" if value else "wiz"
+            print("💅 BEKI SAYS: " + out_val)
+            self.console_output.append(f"💅 BEKI SAYS: {out_val}")
+            self.story.append(f"Brodcast ang chika: sumigaw ng '{out_val}'!")
         else:
             print(f"💅 BEKI SAYS: {value}")
+            self.console_output.append(f"💅 BEKI SAYS: {value}")
+            self.story.append(f"Brodcast ang chika: sumigaw ng '{value}'!")
 
     def visit_IfStmt(self, node):
         condition = self.visit(node.condition)
@@ -513,10 +560,13 @@ def print_ast(node, level=0):
         val = getattr(node, 'value', getattr(node, 'var_name', ''))
         print(f"{indent}{name}({val})")
 
-def run_bekilang(code):
-    print("✨ ========================================== ✨")
-    print("🦋  BekiLang Interpreter Booting up... Pak!   🦋")
-    print("✨ ========================================== ✨\n")
+def run_bekilang(code, return_dict=False):
+    if not return_dict:
+        print("✨ ========================================== ✨")
+        print("🦋  BekiLang Interpreter Booting up... Pak!   🦋")
+        print("✨ ========================================== ✨\n")
+    
+    lexer_story = []
     try:
         print("--- STARTING LEXICAL ANALYSIS ---")
         temp_lexer = Lexer(code)
@@ -530,6 +580,11 @@ def run_bekilang(code):
             if tok.type == "UNKNOWN":
                 unknown_count += 1
                 unknown_tokens.append(tok.value)
+            
+            # Simple Lexer Story tracking for keywords/ids/types
+            if tok.type in ("IDENTIFIER", "TYPE_INT", "TYPE_FLOAT", "TYPE_STRING", "TYPE_CHAR", "TYPE_BOOL"):
+                lexer_story.append(f"Nakita yung '{tok.value}' as {tok.type}")
+
             if len(tokens) <= 30:
                 val_repr = f"'{tok.value}'" if isinstance(tok.value, str) else str(tok.value)
                 print(f"[LEXER] Found {val_repr:<10} -> Identified as {tok.type}")
@@ -560,9 +615,66 @@ def run_bekilang(code):
         for k, v in interpreter.GLOBAL_SCOPE.items():
             print(f"  Variable '{k}' -> Value: {repr(v)} (Type: {type(v).__name__})")
             
+        if not return_dict: print_explainability_story(lexer_story, parser, interpreter)
+        
+        if return_dict:
+            return {
+                "status": "success",
+                "symbol_table": interpreter.SYMBOL_TABLE_META,
+                "console": interpreter.console_output,
+                "story_lexer": lexer_story,
+                "story_parser": parser.story,
+                "story_semantics": interpreter.story
+            }
+
     except Exception as e:
         print(f"\n{e}")
         print("🚦 Status: COMPILATION FAILED (Jusko day, ang daming mali! I-debug mo na besh!)")
+        
+        # Determine what objects were created before the error
+        p = parser if 'parser' in locals() else None
+        i = interpreter if 'interpreter' in locals() else None
+        
+        if not return_dict: print_explainability_story(lexer_story, p, i)
+        
+        if return_dict:
+            return {
+                "status": "error",
+                "error_message": str(e),
+                "symbol_table": i.SYMBOL_TABLE_META if i else [],
+                "console": i.console_output if i else [],
+                "story_lexer": lexer_story,
+                "story_parser": p.story if p and hasattr(p, 'story') else [],
+                "story_semantics": i.story if i and hasattr(i, 'story') else []
+            }
+        
+def print_explainability_story(lexer_story, parser, interpreter):
+    print("\n✨ ========================================== ✨")
+    print("📖  BEKILANG EXPLAINABILITY STORY TIME  📖")
+    print("✨ ========================================== ✨")
+    
+    print("💅 1. Sabi ng Lexer (Ang Tagabasa ng Chismis): ")
+    if lexer_story:
+        print("   Tiningnan ko yung words isa-isa. " + ", ".join(lexer_story[:5]) + (" at iba pa!" if len(lexer_story)>5 else "."))
+    else:
+        print("   Wala akong masyadong nakitang interesting na words, sis.")
+
+    print("\n💅 2. Sabi ng Parser (Ang Marites na taga-connect ng kwento): ")
+    if parser and hasattr(parser, 'story') and parser.story:
+        for line in parser.story:
+            print(f"   - {line}")
+    else:
+        print("   - Walang matinong statements na na-parse. Naloka agad ako bago makabuo ng logic!")
+
+    print("\n💅 3. Sabi ng Semantic Analyzer (Ang Judge ng Katotohanan): ")
+    if interpreter and hasattr(interpreter, 'story') and interpreter.story:
+        for line in interpreter.story:
+            print(f"   - {line}")
+    else:
+        print("   - Walang naganap na action sa memorya. Di pumasa sa standards ko!")
+    print("\n✨ ========================================== ✨\n")
+            
+
 
 
 if __name__ == "__main__":
