@@ -209,20 +209,20 @@ class Parser:
         self.current_token = self.lexer.get_next_token()
 
     def error(self, message):
-        raise Exception(f"❌ Syntax Error (Linya {self.current_token.line}): Nakakaloka! {message}. Found '{self.current_token.value}'")
+        raise Exception(f"❌ Syntax Error (Linya {self.current_token.line}): Ay, shunga ka sis! Nakakaloka ang grammar! {message}. Found '{self.current_token.value}'")
 
     def eat(self, token_type):
         if self.current_token.type == token_type:
             self.current_token = self.lexer.get_next_token()
         else:
             if token_type == "SEMI":
-                self.error("Tapusin mo ang statement with 'periodt' or 'ganern' para pak!")
+                self.error("Nalimutan mo ang tuldok sis! Tapusin mo ang statement with 'periodt' or 'ganern' para pak!")
             elif token_type == "RBRACE":
-                self.error("Missing closing '}' brace")
+                self.error("Nawawala ang pinto sis! Missing closing '}' brace")
             elif token_type == "RPAREN":
-                self.error("Missing closing ')' parenthesis")
+                self.error("Hindi mo sinara ang kwento mo! Missing closing ')' parenthesis")
             else:
-                self.error(f"Expected {token_type}")
+                self.error(f"Ew, hinahanap ko ang {token_type} pero iba ang binigay mo")
 
     def program(self):
         statements = []
@@ -364,7 +364,7 @@ class Interpreter:
         self.GLOBAL_SCOPE = {}  # Symbol table
 
     def error(self, message):
-        raise Exception(f"❌ Semantic Error: {message}\n🛠 Recovery Strategy: Type Coercion or Discard Assignment.")
+        raise Exception(f"❌ Semantic Error: {message}\n🛠 Recovery Strategy: Type Coercion or Discard Assignment. (Naloka ang system!)")
 
     def visit(self, node):
         method_name = f'visit_{type(node).__name__}'
@@ -392,16 +392,16 @@ class Interpreter:
         # Semantic Type Checking
         failed_check = False
         if t == "TYPE_INT" and not isinstance(value, int):
-            self.error(f"Variable '{var_name}' is declared as '{t}', but value '{value}' is not a whole number.")
+            self.error(f"Ay chaka! Ang '{var_name}' ay 'borta' (int), pero binigyan mo ng '{value}' na hindi whole number. Taray mo sis!")
             failed_check = True
         elif t == "TYPE_FLOAT" and not isinstance(value, (float, int)):
-            self.error(f"Variable '{var_name}' is declared as '{t}', but value '{value}' is not a decimal.")
+            self.error(f"Ano ba 'yan! Ang '{var_name}' ay 'mema' (float), pero ang '{value}' hindi decimal. Mema-lagay lang?")
             failed_check = True
         elif t == "TYPE_STRING" and not isinstance(value, str):
-            self.error(f"Variable '{var_name}' is declared as '{t}', but value '{value}' is not a string.")
+            self.error(f"Maling chika! Ang '{var_name}' ay 'chika' (string), ba't mo nilagyan ng '{value}'? Spill the real tea!")
             failed_check = True
         elif t == "TYPE_BOOL" and not isinstance(value, bool):
-            self.error(f"Variable '{var_name}' is declared as '{t}', but value '{value}' is not boolean.")
+            self.error(f"Imbento! Ang '{var_name}' ay 'truch' (boolean), pero ang '{value}' hindi truch or wiz. Ano ba talaga?")
             failed_check = True
             
         if not failed_check:
@@ -413,7 +413,7 @@ class Interpreter:
     def visit_Assign(self, node):
         var_name = node.var_name
         if var_name not in self.GLOBAL_SCOPE:
-            self.error(f"Sino si '{var_name}'? Di ko siya kilala! I-declare mo muna sis.")
+            self.error(f"Who's that girl? Sino si '{var_name}'? Di ko siya kilala! I-declare mo muna sis bago mo i-assign.")
             return
         self.GLOBAL_SCOPE[var_name] = self.visit(node.expr)
 
@@ -469,7 +469,7 @@ class Interpreter:
         elif op == "MUL": return left * right
         elif op == "DIV": 
             if right == 0: 
-                self.error("Division by zero! Anong kalokohan ito?")
+                self.error("Hala siya! Division by zero! Anong kalokohan ito, gusto mo ba sumabog ang universe?")
                 return 0
             return left / right
         elif op == "GT": return left > right
@@ -540,7 +540,7 @@ def run_bekilang(code):
 
         if unknown_count > 0:
             bad = ', '.join(repr(t) for t in unknown_tokens)
-            raise Exception(f"❌ Lexical Error: '{bad}' is an Invalid Token / Identifier sa BekiLang.\n🛠 Recovery Strategy: Panic Mode Recovery.")
+            raise Exception(f"❌ Lexical Error: Ay tarush, anong pinagsasabi mong '{bad}'? That's an Invalid Token / Identifier sa BekiLang!\n🛠 Recovery Strategy: Panic Mode Recovery. (Nag-walk out si bakla)")
 
         print("--- STARTING SYNTAX ANALYSIS ---")
         lexer = Lexer(code) # Reset lexer for parser
@@ -562,7 +562,7 @@ def run_bekilang(code):
             
     except Exception as e:
         print(f"\n{e}")
-        print("🚦 Status: COMPILATION FAILED (May chika sa code mo, i-debug mo na besh!)")
+        print("🚦 Status: COMPILATION FAILED (Jusko day, ang daming mali! I-debug mo na besh!)")
 
 
 if __name__ == "__main__":
