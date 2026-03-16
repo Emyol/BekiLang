@@ -215,8 +215,12 @@ class Parser:
         if self.current_token.type == token_type:
             self.current_token = self.lexer.get_next_token()
         else:
-            if token_type in ("SEMI", "RBRACE", "RPAREN"):
-                print(f"[PARSER] Phrase-Level Recovery: Missing '{token_type}' detected near '{self.current_token.value}'. Inserting automatically.")
+            if token_type == "SEMI":
+                self.error("Tapusin mo ang statement with 'periodt' or 'ganern' para pak!")
+            elif token_type == "RBRACE":
+                self.error("Missing closing '}' brace")
+            elif token_type == "RPAREN":
+                self.error("Missing closing ')' parenthesis")
             else:
                 self.error(f"Expected {token_type}")
 
@@ -360,8 +364,7 @@ class Interpreter:
         self.GLOBAL_SCOPE = {}  # Symbol table
 
     def error(self, message):
-        print(f"[SEMANTICS] FATAL ERROR: {message}")
-        print("[SEMANTICS] Recovery Strategy: Compiler will discard assignment to prevent memory corruption.")
+        raise Exception(f"❌ Semantic Error: {message}\n🛠 Recovery Strategy: Type Coercion or Discard Assignment.")
 
     def visit(self, node):
         method_name = f'visit_{type(node).__name__}'
@@ -519,11 +522,14 @@ def run_bekilang(code):
         temp_lexer = Lexer(code)
         tokens = []
         unknown_count = 0
+        unknown_tokens = []
         while True:
             tok = temp_lexer.get_next_token()
             if tok.type == "EOF": break
             tokens.append(tok)
-            if tok.type == "UNKNOWN": unknown_count += 1
+            if tok.type == "UNKNOWN":
+                unknown_count += 1
+                unknown_tokens.append(tok.value)
             if len(tokens) <= 30:
                 val_repr = f"'{tok.value}'" if isinstance(tok.value, str) else str(tok.value)
                 print(f"[LEXER] Found {val_repr:<10} -> Identified as {tok.type}")
@@ -531,6 +537,10 @@ def run_bekilang(code):
                 print("[LEXER] ... (and more)")
             
         print(f"✓ Lexical Analysis Complete. {unknown_count} Unknown Tokens.\n")
+
+        if unknown_count > 0:
+            bad = ', '.join(repr(t) for t in unknown_tokens)
+            raise Exception(f"❌ Lexical Error: '{bad}' is an Invalid Token / Identifier sa BekiLang.\n🛠 Recovery Strategy: Panic Mode Recovery.")
 
         print("--- STARTING SYNTAX ANALYSIS ---")
         lexer = Lexer(code) # Reset lexer for parser
