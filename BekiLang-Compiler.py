@@ -1,13 +1,20 @@
+# BekiLang Compiler
+# A custom interpreter for BekiLang — a Filipino gay lingo-based programming language.
+# Implements all three phases: Lexical Analysis, Syntax Analysis, and Semantic Analysis.
+
 import sys
 import re
 import os
 import unicodedata
 
-# Enable ANSI escape codes on Windows
+# Windows terminals don't enable ANSI color codes by default,
+# so this forces the shell to process.
 if sys.platform == "win32":
     os.system("")
 
 # --- ANSI Color & Style Helpers ---
+# instead of writing raw escape codes everywhere, we put them in a class
+# so they're easy to reference and change in one place.
 class C:
     RESET   = "\033[0m"
     BOLD    = "\033[1m"
@@ -21,6 +28,7 @@ class C:
     WHITE   = "\033[97m"
 
 def print_banner():
+    #screen shown when running the compiler from the terminal directly.
     lines = [
         "╔══════════════════════════════════════════════════════╗",
         "║     🦋   B E K I L A N G   C O M P I L E R   🦋      ║",
@@ -33,9 +41,12 @@ def print_banner():
 
 def display_width(s):
     """Returns the true terminal display width of a string, accounting for wide emojis."""
+    # Emoji characters take up 2 terminal columns, so we can't just use len().
     return sum(2 if unicodedata.east_asian_width(c) in ('W', 'F') else 1 for c in s)
 
 def print_section(title, emoji="▶", color=C.CYAN):
+    # males a bordered section header for each compiler phase (Lexer, Parser, Semantics).
+    # We compute padding manually to account for wide emoji widths.
     bar = "─" * 44
     print(f"\n{color}{C.BOLD}┌{bar}┐")
     label = f"  {emoji}  {title}"
@@ -44,14 +55,18 @@ def print_section(title, emoji="▶", color=C.CYAN):
     print(f"└{bar}┘{C.RESET}")
 
 def print_ok(msg):
+    # Green checkmark
     print(f"{C.GREEN}{C.BOLD}  ✓  {msg}{C.RESET}")
 
 def print_fail(msg):
+    # Red X 
     print(f"{C.RED}{C.BOLD}  ✗  {msg}{C.RESET}")
 
 def print_info(label, msg, color=C.YELLOW):
     print(f"  {color}{C.BOLD}{label}{C.RESET}  {msg}")
 
+# Maps token types to a terminal color for the lexer output table.
+# Grouping by category (types, keywords, literals, operators) makes it easier to read.
 TOKEN_COLORS = {
     "TYPE_INT": C.MAGENTA, "TYPE_FLOAT": C.MAGENTA,
     "TYPE_STRING": C.MAGENTA, "TYPE_CHAR": C.MAGENTA, "TYPE_BOOL": C.MAGENTA,
@@ -69,7 +84,8 @@ TOKEN_COLORS = {
 
 # --- 1. LEXER (Tokenization) ---
 
-# BekiLang Keywords & Operators mappings
+# BekiLang keywords map Filipino gay lingo words to standard token types.
+# e.g., "chika" (gossip/talk) → STRING type, "parinig" (to hint/say) → PRINT
 KEYWORDS = {
     "borta": "TYPE_INT",     # int
     "mema": "TYPE_FLOAT",    # float
@@ -84,7 +100,7 @@ KEYWORDS = {
     "wiz": "FALSE",          # false
     "ay": "ASSIGN",          # =
     "periodt": "SEMI",       # ;
-    "ganern": "SEMI",        # ;
+    "ganern": "SEMI",        # ; (alternate, both work as statement terminators)
     "dagdag": "PLUS",        # +
     "bawas": "MINUS",        # -
     "times": "MUL",          # *
@@ -97,6 +113,7 @@ KEYWORDS = {
     "o_kaya": "OR",          # or
 }
 
+# Standard symbol operators
 SYMBOLS = {
     '+': 'PLUS', '-': 'MINUS', '*': 'MUL', '/': 'DIV',
     '>': 'GT', '<': 'LT', '==': 'EQ', '!=': 'NEQ',
@@ -105,6 +122,8 @@ SYMBOLS = {
 }
 
 class Token:
+    # The smallest unit of meaning in BekiLang source code.
+    # Stores its type (what it is), value (raw text), and the line it was found on.
     def __init__(self, type_, value, line):
         self.type = type_
         self.value = value
@@ -119,22 +138,27 @@ class Lexer:
         self.text = text
         self.pos = 0
         self.current_char = self.text[self.pos] if self.text else None
-        self.line = 1
+        self.line = 1  # Track line numbers for meaningful error messages
 
     def advance(self):
+        # Move to the next character in the source text.
         self.pos += 1
         if self.pos < len(self.text):
             self.current_char = self.text[self.pos]
         else:
-            self.current_char = None
+            self.current_char = None  # Signal end of input
 
     def skip_whitespace(self):
+        # Eat all spaces, tabs, and newlines.
+        # We increment the line counter on '\n' to keep error reporting accurate.
         while self.current_char is not None and self.current_char.isspace():
             if self.current_char == '\n':
                 self.line += 1
             self.advance()
 
     def skip_comment(self):
+        # BekiLang supports single-line `//` comments, just like C/Java.
+        # We skip everything from `//` to the end of the line.
         while self.current_char is not None and self.current_char != '\n':
             self.advance()
         if self.current_char == '\n':
@@ -142,6 +166,8 @@ class Lexer:
             self.advance()
 
     def get_number(self):
+        # Reads a full integer or float literal character by character.
+        # We count dots to decide whether it's an int or a float.
         result = ''
         dot_count = 0
         while self.current_char is not None and (self.current_char.isdigit() or self.current_char == '.'):
@@ -155,6 +181,8 @@ class Lexer:
             return Token("FLOAT", float(result), self.line)
 
     def get_string(self, quote_type):
+        # Reads a string or char literal between matching quote characters.
+        # Single quotes → CHAR token, double quotes → STRING token.
         result = ''
         self.advance() # skip opening quote
         while self.current_char is not None and self.current_char != quote_type:
@@ -167,6 +195,8 @@ class Lexer:
         return Token("STRING", result, self.line)
 
     def get_id(self):
+        # Reads a full identifier or keyword (letters, digits, underscores).
+        # After collecting it, we check if it's a known keyword — if not, it's an IDENTIFIER.
         result = ''
         while self.current_char is not None and (self.current_char.isalnum() or self.current_char == '_'):
             result += self.current_char
@@ -176,6 +206,9 @@ class Lexer:
         return Token(token_type, result, self.line)
 
     def get_next_token(self):
+        # The main tokenizer loop. Called repeatedly to produce tokens one at a time.
+        # Order of checks matters — whitespace first, then string literals, identifiers,
+        # numbers, and finally symbols. Anything unrecognized becomes UNKNOWN.
         while self.current_char is not None:
             if self.current_char.isspace():
                 self.skip_whitespace()
@@ -206,7 +239,8 @@ class Lexer:
                     self.advance()
                 return Token(SYMBOLS.get(char, "UNKNOWN"), char, self.line)
 
-            # Fallback for unknown character
+            # Fallback for unknown character — we still produce a token so the
+            # lexer can report it properly rather than silently crashing.
             char = self.current_char
             self.advance()
             return Token("UNKNOWN", char, self.line)
@@ -216,47 +250,60 @@ class Lexer:
 
 # --- 2. PARSER (AST Generating) ---
 
+# AST Node definitions — each represents one kind of construct in the language.
+# They're intentionally thin data containers; logic lives in the Interpreter.
 class ASTNode: pass
 class BinOp(ASTNode):
+    # A binary operation node: left operand, operator token, right operand.
     def __init__(self, left, op, right):
         self.left = left
         self.op = op
         self.right = right
 class Num(ASTNode):
+    # Numeric literal (int or float).
     def __init__(self, token):
         self.value = token.value
         self.type = token.type
 class StringVal(ASTNode):
+    # String or char literal.
     def __init__(self, token):
         self.value = token.value
 class BoolVal(ASTNode):
+    # Boolean literal — korik (true) or wiz (false).
     def __init__(self, token):
         self.value = True if token.type == "TRUE" else False
 class VarDecl(ASTNode):
+    # Variable declaration: type + name + initial value expression.
     def __init__(self, var_type, var_name, expr):
         self.var_type = var_type
         self.var_name = var_name
         self.expr = expr
 class Assign(ASTNode):
+    # Reassignment to an already-declared variable.
     def __init__(self, var_name, expr):
         self.var_name = var_name
         self.expr = expr
 class Var(ASTNode):
+    # A reference to a variable by name (used in expressions).
     def __init__(self, token):
         self.var_name = token.value
 class Print(ASTNode):
+    # A parinig (print) statement wrapping one expression.
     def __init__(self, expr):
         self.expr = expr
 class IfStmt(ASTNode):
+    # Conditional: condition, true branch, and optional false branch.
     def __init__(self, condition, true_block, false_block):
         self.condition = condition
         self.true_block = true_block
         self.false_block = false_block
 class WhileStmt(ASTNode):
+    # While loop: condition + body block.
     def __init__(self, condition, block):
         self.condition = condition
         self.block = block
 class Block(ASTNode):
+    # A sequence of statements — used as the root program node and for { } blocks.
     def __init__(self, statements):
         self.statements = statements
 
@@ -265,12 +312,15 @@ class Parser:
     def __init__(self, lexer):
         self.lexer = lexer
         self.current_token = self.lexer.get_next_token()
-        self.story = []
+        self.story = []  # Human-readable log of what the parser saw, shown in Story Time
 
     def error(self, message):
+        # All parse errors bubble up through here with a line number for context.
         raise Exception(f"❌ Syntax Error (Linya {self.current_token.line}): Ay, shunga ka sis! Nakakaloka ang grammar! {message}. Found '{self.current_token.value}'")
 
     def eat(self, token_type):
+        # Consume the current token if it matches what we expect,
+        # otherwise raise a context-specific error message.
         if self.current_token.type == token_type:
             self.current_token = self.lexer.get_next_token()
         else:
@@ -284,12 +334,15 @@ class Parser:
                 self.error(f"Ew, hinahanap ko ang {token_type} pero iba ang binigay mo")
 
     def program(self):
+        # Entry point — parses all top-level statements until EOF.
         statements = []
         while self.current_token.type != "EOF":
             statements.append(self.statement())
         return Block(statements)
 
     def statement(self):
+        # Dispatches to the right parse method based on the current token type.
+        # This is the classic recursive descent "statement" function.
         if self.current_token.type in ("TYPE_INT", "TYPE_FLOAT", "TYPE_STRING", "TYPE_CHAR", "TYPE_BOOL"):
             return self.declaration()
         elif self.current_token.type == "IDENTIFIER":
@@ -306,6 +359,8 @@ class Parser:
             self.error("Hala sis, hindi ko ma-gets ang statement mo")
 
     def declaration(self):
+        # Grammar rule: [DATATYPE] [IDENTIFIER] [ASSIGN] [EXPR] [SEMI]
+        # e.g., borta score ay 100 periodt
         print_info("[ PARSER ]", "Checking statement structure...")
         print_info("[ PARSER ]", f"Expected rule: {C.DIM}[DATATYPE] [ID] [ASSIGN] [EXPR] [SEMI]{C.RESET}")
         var_type = self.current_token.type
@@ -320,6 +375,8 @@ class Parser:
         return VarDecl(var_type, var_name, expr)
 
     def assignment(self):
+        # Grammar rule: [IDENTIFIER] [ASSIGN] [EXPR] [SEMI]
+        # e.g., score ay 200 periodt
         print_info("[ PARSER ]", "Checking statement structure...")
         print_info("[ PARSER ]", f"Expected rule: {C.DIM}[ID] [ASSIGN] [EXPR] [SEMI]{C.RESET}")
         var_name = self.current_token.value
@@ -332,6 +389,7 @@ class Parser:
         return Assign(var_name, expr)
 
     def print_statement(self):
+        # Grammar rule: parinig [EXPR] [SEMI]
         self.eat("PRINT")
         expr = self.expr()
         self.eat("SEMI")
@@ -339,6 +397,8 @@ class Parser:
         return Print(expr)
 
     def if_statement(self):
+        # Grammar rule: kunwari [EXPR] [BLOCK] (eh_di [BLOCK])?
+        # The else branch is optional.
         self.eat("IF")
         cond = self.expr()
         true_block = self.block()
@@ -352,6 +412,7 @@ class Parser:
         return IfStmt(cond, true_block, false_block)
 
     def while_statement(self):
+        # Grammar rule: gorabel [EXPR] [BLOCK]
         self.eat("WHILE")
         cond = self.expr()
         block = self.block()
@@ -359,6 +420,7 @@ class Parser:
         return WhileStmt(cond, block)
 
     def block(self):
+        # Parses a { } enclosed group of statements.
         self.eat("LBRACE")
         statements = []
         while self.current_token.type != "RBRACE" and self.current_token.type != "EOF":
@@ -366,7 +428,12 @@ class Parser:
         self.eat("RBRACE")
         return Block(statements)
 
+    # Expression parsing follows standard operator precedence (lowest to highest):
+    # expr → comp_expr → arith_expr → term → factor
+    # Each level calls the next, which handles higher-precedence operations first.
+
     def expr(self):
+        # Handles logical AND / OR — lowest precedence.
         node = self.comp_expr()
         while self.current_token.type in ("AND", "OR"):
             op = self.current_token
@@ -376,6 +443,7 @@ class Parser:
         return node
 
     def comp_expr(self):
+        # Handles comparison operators: >, <, ==, !=
         node = self.arith_expr()
         while self.current_token.type in ("GT", "LT", "EQ", "NEQ"):
             op = self.current_token
@@ -384,6 +452,7 @@ class Parser:
         return node
 
     def arith_expr(self):
+        # Handles addition and subtraction.
         node = self.term()
         while self.current_token.type in ("PLUS", "MINUS"):
             op = self.current_token
@@ -392,6 +461,7 @@ class Parser:
         return node
 
     def term(self):
+        # Handles multiplication and division — higher precedence than +/-.
         node = self.factor()
         while self.current_token.type in ("MUL", "DIV"):
             op = self.current_token
@@ -400,6 +470,7 @@ class Parser:
         return node
 
     def factor(self):
+        # Base case — handles literals, identifiers, and parenthesized expressions.
         token = self.current_token
         if token.type in ("INTEGER", "FLOAT"):
             self.eat(token.type)
@@ -414,6 +485,7 @@ class Parser:
             self.eat("IDENTIFIER")
             return Var(token)
         elif token.type == "LPAREN":
+            # Grouped expression: ( expr )
             self.eat("LPAREN")
             node = self.expr()
             self.eat("RPAREN")
@@ -428,14 +500,16 @@ class Interpreter:
     """Evaluates the AST, enforces semantic typing, and executes BekiLang statements."""
     def __init__(self, parser):
         self.parser = parser
-        self.GLOBAL_SCOPE = {}  # Value bindings
-        self.SYMBOL_TABLE_META = [] # Tracks {name, type, level, offset}
-        self.current_level = -1
-        self.offset_stack = []
-        self.story = []
-        self.console_output = []
+        self.GLOBAL_SCOPE = {}          # Variable name → value bindings
+        self.SYMBOL_TABLE_META = []     # Tracks {name, type, level, offset} for display
+        self.current_level = -1         # Scope depth, increments on each Block entry
+        self.offset_stack = []          # Stack of byte offsets per scope level
+        self.story = []                 # Semantic log entries shown in Story Time
+        self.console_output = []        # Collects print output to send to the web IDE
 
     def get_type_size(self, var_type):
+        # Returns the simulated memory size (in bytes) of a given type.
+        # Used to calculate symbol table offsets — mirrors how real compilers work.
         if var_type in ("TYPE_INT", "TYPE_FLOAT"): return 4
         if var_type == "TYPE_DOUBLE": return 8
         if var_type in ("TYPE_CHAR", "TYPE_STRING"): return 1
@@ -446,14 +520,19 @@ class Interpreter:
         raise Exception(f"❌ Semantic Error: {message}\n🛠 Recovery Strategy: Type Coercion or Discard Assignment. (Naloka ang system!)")
 
     def visit(self, node):
+        # Visitor pattern: dynamically dispatch to the right visit_* method.
+        # e.g., visiting a VarDecl node calls self.visit_VarDecl(node).
         method_name = f'visit_{type(node).__name__}'
         visitor = getattr(self, method_name, self.generic_visit)
         return visitor(node)
 
     def generic_visit(self, node):
+        # Fallback if we forgot to implement a visitor — fail loudly.
         raise Exception(f"No visit_{type(node).__name__} method")
 
     def visit_Block(self, node):
+        # Entering a block opens a new scope level and resets the offset counter.
+        # Exiting restores the previous scope — simulates a basic call stack.
         self.current_level += 1
         self.offset_stack.append(0) # Offset resets to 0 for inner blocks
         for stmt in node.statements:
@@ -462,6 +541,8 @@ class Interpreter:
         self.offset_stack.pop()
 
     def visit_VarDecl(self, node):
+        # Type-checks the assigned value against the declared type before storing it.
+        # If the types don't match, we raise a semantic error and bail out.
         var_name = node.var_name
         if var_name in self.GLOBAL_SCOPE:
             self.error(f"Ginamit mo na ang '{var_name}', sis! Wag paulit-ulit.")
@@ -494,7 +575,8 @@ class Interpreter:
             print_info("[SEMANTICS]", f"Binding {C.CYAN}'{var_name}'{C.RESET} to Symbol Table.")
             self.GLOBAL_SCOPE[var_name] = value
 
-            # Submitting to upgraded Symbol Table (Metadata)
+            # Add variable metadata to the symbol table.
+            # Offset is computed based on type size to simulate actual memory layout.
             size = self.get_type_size(t)
             current_offset = self.offset_stack[-1]
 
@@ -509,6 +591,8 @@ class Interpreter:
             self.story.append(f"Nilagay sa memorya si '{var_name}' na may value na '{value}'. Pak ganern!")
 
     def visit_Assign(self, node):
+        # Reassigning an undeclared variable is a semantic error.
+        # We don't do re-declaration here — just update the existing binding.
         var_name = node.var_name
         if var_name not in self.GLOBAL_SCOPE:
             self.error(f"Who's that girl? Sino si '{var_name}'? Di ko siya kilala! I-declare mo muna sis bago mo i-assign.")
@@ -518,6 +602,7 @@ class Interpreter:
         self.story.append(f"In-update natin si '{var_name}', ang bagong chika ay '{val}'.")
 
     def visit_Var(self, node):
+        # Look up a variable by name. If it's not declared, that's a semantic error.
         var_name = node.var_name
         if var_name not in self.GLOBAL_SCOPE:
             self.error(f"Sino si '{var_name}'? Walang ganyang pangalan dito uy.")
@@ -525,6 +610,8 @@ class Interpreter:
         return self.GLOBAL_SCOPE[var_name]
 
     def visit_Print(self, node):
+        # Evaluates the expression and outputs the result.
+        # Booleans get a localized display (korik/wiz) instead of Python's True/False.
         value = self.visit(node.expr)
         if isinstance(value, bool):
             out_val = "korik" if value else "wiz"
@@ -539,6 +626,7 @@ class Interpreter:
             self.story.append(f"Brodcast ang chika: sumigaw ng '{value}'!")
 
     def visit_IfStmt(self, node):
+        # Evaluate the condition, then execute the appropriate branch.
         condition = self.visit(node.condition)
         if condition:
             self.visit(node.true_block)
@@ -546,6 +634,8 @@ class Interpreter:
             self.visit(node.false_block)
 
     def visit_WhileStmt(self, node):
+        # Standard while loop with an infinite loop guard.
+        # 10,000 iterations is generous enough for demo programs but prevents hangs.
         safety_net = 0
         while self.visit(node.condition):
             self.visit(node.block)
@@ -563,6 +653,8 @@ class Interpreter:
         return node.value
 
     def visit_BinOp(self, node):
+        # Evaluates both sides first, then applies the operator.
+        # String + anything coerces to string concatenation — a convenience feature.
         left = self.visit(node.left)
         right = self.visit(node.right)
         op = node.op.type
@@ -587,7 +679,10 @@ class Interpreter:
         elif op == "OR": return left or right
 
 # --- 4. RUNNER ---
+
 def print_ast(node, level=0):
+    # Debug utility to print the AST as an indented tree.
+    # Useful when you want to visually verify the parse output — normally commented out.
     indent = "  " * level
     if node is None: return
     name = type(node).__name__
@@ -621,6 +716,8 @@ def print_ast(node, level=0):
         print(f"{indent}{name}({val})")
 
 def print_symbol_table(symbol_table):
+    # Renders the symbol table as a formatted box in the terminal.
+    # Column widths are hardcoded — adjust if variable names get longer.
     col_name   = 16
     col_type   = 12
     col_level  = 7
@@ -655,6 +752,9 @@ def run_bekilang(code, return_dict=False):
 
     lexer_story = []
     try:
+        # --- Phase 1: Lexical Analysis ---
+        # We do a separate tokenization pass here just to display and validate tokens.
+        # The actual parser creates its own Lexer instance below.
         print_section("LEXICAL ANALYSIS", "🔍", C.CYAN)
         temp_lexer = Lexer(code)
         tokens = []
@@ -672,6 +772,8 @@ def run_bekilang(code, return_dict=False):
             if tok.type in ("IDENTIFIER", "TYPE_INT", "TYPE_FLOAT", "TYPE_STRING", "TYPE_CHAR", "TYPE_BOOL"):
                 lexer_story.append(f"Nakita yung '{tok.value}' as {tok.type}")
 
+            # Only display the first 30 tokens to keep the output readable.
+            # If there are more, show a truncation notice.
             if len(tokens) <= 30:
                 val_repr = f"'{tok.value}'" if isinstance(tok.value, str) else str(tok.value)
                 tok_color = TOKEN_COLORS.get(tok.type, C.WHITE)
@@ -682,10 +784,13 @@ def run_bekilang(code, return_dict=False):
         print()
         print_ok(f"Lexical Analysis Complete. {C.YELLOW}{unknown_count}{C.RESET}{C.GREEN} Unknown Token(s) found.{C.RESET}")
 
+        # Stop early if any unknown tokens were found — no point parsing garbage.
         if unknown_count > 0:
             bad = ', '.join(repr(t) for t in unknown_tokens)
             raise Exception(f"❌ Lexical Error: Ay tarush, anong pinagsasabi mong '{bad}'? That's an Invalid Token / Identifier sa BekiLang!\n🛠 Recovery Strategy: Panic Mode Recovery. (Nag-walk out si bakla)")
 
+        # --- Phase 2: Syntax Analysis ---
+        # Fresh Lexer instance — the parser drives tokenization on-demand.
         print_section("SYNTAX ANALYSIS", "🌿", C.BLUE)
         lexer = Lexer(code) # Reset lexer for parser
         parser = Parser(lexer)
@@ -694,6 +799,7 @@ def run_bekilang(code, return_dict=False):
         print()
         print_ok("Syntax Analysis Complete. No structural errors.")
 
+        # --- Phase 3: Semantic Analysis + Execution ---
         print_section("SEMANTIC ANALYSIS", "🧠", C.YELLOW)
         interpreter = Interpreter(parser)
         interpreter.visit(tree)
@@ -711,6 +817,7 @@ def run_bekilang(code, return_dict=False):
 
         if not return_dict: print_explainability_story(lexer_story, parser, interpreter)
 
+        # Return structured data for the web IDE instead of printing to stdout.
         if return_dict:
             return {
                 "status": "success",
@@ -731,6 +838,7 @@ def run_bekilang(code, return_dict=False):
         print(f"  ╚══════════════════════════════════════════════════╝{C.RESET}")
 
         # Determine what objects were created before the error
+        # so we can still return partial results for Story Time.
         p = parser if 'parser' in locals() else None
         i = interpreter if 'interpreter' in locals() else None
 
@@ -748,6 +856,8 @@ def run_bekilang(code, return_dict=False):
             }
 
 def print_explainability_story(lexer_story, parser, interpreter):
+    # Prints a human-readable summary of what each compiler phase did.
+    # This is the "Story Time" feature — meant to make the compiler output approachable.
     print(f"\n  {C.MAGENTA}{C.BOLD}╔══════════════════════════════════════════════════╗")
     print(f"  ║   📖   B E K I L A N G   S T O R Y   T I M E     ║")
     print(f"  ╚══════════════════════════════════════════════════╝{C.RESET}\n")
