@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 # Import Interpreter with hyphens using absolute paths for Vercel
 current_dir = os.path.dirname(os.path.abspath(__file__))
-interpreter_path = os.path.join(current_dir, "BekiLang-Interpreter.py")
+interpreter_path = os.path.join(current_dir, "BekiLang-Compiler.py")
 
 spec = importlib.util.spec_from_file_location("BekiLang", interpreter_path)
 beki = importlib.util.module_from_spec(spec)
