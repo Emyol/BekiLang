@@ -3,182 +3,309 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BekiLang Studio 💋✨</title>
-    <meta name="description" content="BekiLang Studio — a fierce, glamorous code playground for the Filipino gay lingo programming language.">
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Pacifico&display=swap" rel="stylesheet">
-    <!-- Main Style -->
+    <title>BekiLang Studio</title>
+    <meta name="description" content="BekiLang Studio: write, run, and read the compiler's chismis for BekiLang, the programming language built on Philippine gay lingo.">
+    <meta name="theme-color" content="#D0201A">
+
+    <!-- Set the edition (light/dark) before first paint so the page never flashes the wrong theme. -->
+    <script>
+        (function () {
+            var theme = null;
+            try { theme = localStorage.getItem('beki-theme'); } catch (e) {}
+            if (theme === 'night' || theme === 'day') {
+                document.documentElement.setAttribute('data-theme', theme === 'night' ? 'dark' : 'light');
+            }
+        })();
+    </script>
+
+    <!-- Fonts and icons are self-hosted so the Studio still looks right on an offline classroom laptop. -->
+    <link rel="preload" href="{{ url_for('static', filename='vendor/fonts/Archivo-normal-latin.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/fonts/fonts.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/phosphor/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <!-- Background Layers -->
-    <div class="glow-bg"></div>
-    <div class="animated-gradient-bg"></div>
-    <div class="noise-overlay"></div>
+<!--
+THESIS: Every run is today's tabloid front page. The compiler's verdict is the headline and each phase files its own story. Refuses the dark neon IDE-with-tabs default.
+OWN-WORLD: Grey newsprint, ink-black rules and reverse-type bars, one rationed tabloid red (nameplate, Run, errors), highlighter yellow. Heavy condensed Archivo headlines, Source Serif body columns, JetBrains Mono for code and data. Sharp corners, no glow.
+STORY: Visitors write or load a program, press Run, read the verdict at a glance, then follow Lexer, Parser and Semantics as bylined reporters. Errors name the line and jump there.
+FIRST VIEWPORT: Red nameplate across the top. Editor is the lead column (left 7/12) with Run beside the example picker. Right 5/12: headline verdict, phase strip, program output, symbol table.
+FORM: Chismis Tabloid, candidate 3 of 7, seed key b7f32c42.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+-->
+    <a class="skip-link" href="#codeInput">Skip to the code editor</a>
 
-    <!-- Floating Sparkles -->
-    <div class="sparkles star-1">✨</div>
-    <div class="sparkles star-2">💋</div>
-    <div class="sparkles star-3">💅</div>
-    <div class="sparkles star-4">🦋</div>
-
-    <div class="app-container">
-        <!-- ═══ Header ═══ -->
-        <header>
-            <h1>BekiLang Studio</h1>
-            <p class="subtitle">Where your code struts its stuff, Mhiema!</p>
-            <span class="tagline-badge">Philippine Gay Lingo × Programming</span>
-        </header>
-
-        <!-- ═══ Action Buttons ═══ -->
-        <div class="dashboard-actions">
-            <button id="clearBtn" class="glass-btn">Linis Muna! 🧽</button>
-            <button id="runBtn" class="glamour-btn">Slay Ko 'To! ✨</button>
+    <!-- ═══ Masthead ═══ -->
+    <header class="masthead">
+        <div class="masthead__plate">
+            <h1 class="nameplate">
+                <span class="nameplate__word">BekiLang</span>
+                <span class="nameplate__studio">Studio</span>
+            </h1>
+            <p class="masthead__tagline">Where your code struts its stuff, Mhiema!</p>
         </div>
+        <div class="dateline">
+            <p class="dateline__date" id="datelineDate">Today's edition</p>
+            <p class="dateline__beat">Philippine gay lingo × programming</p>
+            <nav class="dateline__nav" aria-label="Page">
+                <a class="dateline__link" href="#cheatsheet"><i class="ph-bold ph-book-open-text" aria-hidden="true"></i>Cheat sheet</a>
+                <button class="dateline__link" id="themeToggle" type="button" aria-pressed="false">
+                    <i class="ph-bold ph-moon" aria-hidden="true"></i><span>Night edition</span><span class="dateline__aside">dark mode</span>
+                </button>
+            </nav>
+        </div>
+    </header>
 
-        <!-- ═══ Editor Workspace ═══ -->
-        <main class="editor-workspace">
-            <!-- Top: The Burn Book (Code Editor, full width) -->
-            <div class="top-row">
-                <div class="hologram-wrapper">
-                    <div class="editor-panel panel glossy-glass">
-                        <div class="panel-header fierce-header">
-                            <h2>✏️ The Burn Book</h2>
-                            <div class="window-controls">
-                                <span class="dot diamond pink"></span>
-                                <span class="dot diamond cyan"></span>
-                                <span class="dot diamond gold"></span>
-                            </div>
-                        </div>
-                        <div class="editor-main frosted">
-                            <div class="line-numbers highlighter" id="lineNumbers">1</div>
-                            <textarea id="codeInput" spellcheck="false" placeholder="chika greeting ay 'Hello, mga Accla!' periodt..."></textarea>
-                        </div>
-                        <div class="status-indicator">
-                            <span class="status-dot"></span>
-                            <span>Ready to slay</span>
-                        </div>
+    <main class="front" id="main">
+        <!-- ═══ Lead column: the editor ═══ -->
+        <section class="desk" aria-labelledby="deskTitle">
+            <div class="bar">
+                <h2 class="bar__title" id="deskTitle">The Burn Book</h2>
+                <p class="bar__meta">Code editor</p>
+            </div>
+
+            <div class="toolbar">
+                <div class="field">
+                    <label class="field__label" for="exampleSelect">Load an example</label>
+                    <div class="select">
+                        <select id="exampleSelect">
+                            <option value="">Choose a program…</option>
+                        </select>
+                        <i class="ph-bold ph-caret-down" aria-hidden="true"></i>
                     </div>
+                </div>
+                <div class="toolbar__actions">
+                    <button id="clearBtn" class="btn btn--ghost" type="button">
+                        <i class="ph-bold ph-eraser" aria-hidden="true"></i>
+                        <span>Clear output</span>
+                    </button>
+                    <button id="runBtn" class="btn btn--run" type="button" aria-keyshortcuts="Control+Enter Meta+Enter">
+                        <i class="ph-bold ph-play" aria-hidden="true"></i>
+                        <span class="btn__stack">
+                            <span class="btn__label">Run</span>
+                            <span class="btn__aside">Slay ko 'to!</span>
+                        </span>
+                        <kbd class="btn__kbd" id="runKbd">Ctrl ↵</kbd>
+                    </button>
                 </div>
             </div>
 
-            <!-- Bottom: Tabbed Output Panel -->
-            <div class="bottom-row">
-                <div class="output-tabs-panel panel">
-                    <div class="panel-header cyber-header">
-                        <h2>📺 Output Lounge</h2>
-                    </div>
-
-                    <!-- Tab Bar -->
-                    <div class="tab-bar" role="tablist">
-                        <button class="tab-btn active" data-tab="console" role="tab" aria-selected="true" id="tab-console">
-                            📺 Ang Chika
-                        </button>
-                        <button class="tab-btn" data-tab="analysis" role="tab" aria-selected="false" id="tab-analysis">
-                            🔍 Analysis
-                        </button>
-                        <button class="tab-btn" data-tab="symbols" role="tab" aria-selected="false" id="tab-symbols">
-                            📊 Symbol Table
-                        </button>
-                        <button class="tab-btn" data-tab="story" role="tab" aria-selected="false" id="tab-story">
-                            📖 Story Time
-                        </button>
-                    </div>
-
-                    <!-- Tab Content Area -->
-                    <div class="tab-content-area">
-                        <!-- Console -->
-                        <div class="tab-pane active" id="pane-console" role="tabpanel">
-                            <div id="consoleOutput" class="console-output crt-text">Waiting for the tea... ☕</div>
-                        </div>
-
-                        <!-- Analysis -->
-                        <div class="tab-pane" id="pane-analysis" role="tabpanel">
-                            <div id="analysisOutput" class="console-output crt-text">Waiting for analysis...</div>
-                        </div>
-
-                        <!-- Symbol Table -->
-                        <div class="tab-pane" id="pane-symbols" role="tabpanel">
-                            <div class="table-container crt-text">
-                                <table class="beki-table" id="symbolTable">
-                                    <thead>
-                                        <tr>
-                                            <th>Identifier</th>
-                                            <th>Data Type</th>
-                                            <th>Level</th>
-                                            <th>Offset</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="symbolTableBody">
-                                        <tr><td colspan="4">No variables declared yet.</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <!-- Story Time -->
-                        <div class="tab-pane" id="pane-story" role="tabpanel">
-                            <div id="storyOutput" class="console-output crt-text">Waiting for the tea...</div>
-                        </div>
-                    </div>
+            <div class="editor" id="editor">
+                <div class="editor__gutter" aria-hidden="true"><div id="gutter">1</div></div>
+                <div class="editor__body">
+                    <pre class="editor__highlight" id="highlight" aria-hidden="true"><span class="editor__marker" id="errorMarker" hidden></span><code id="highlightCode"></code></pre>
+                    <textarea id="codeInput" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" wrap="off" aria-label="BekiLang code" aria-describedby="editorStatus"></textarea>
                 </div>
             </div>
-        </main>
+            <p class="editor__status" id="editorStatus">
+                <span id="caretPos">Ln 1, Col 1</span>
+                <span class="editor__hint" id="editorHint">Tab indents. Press Esc, then Tab, to leave the editor.</span>
+            </p>
+        </section>
 
-        <!-- ═══ Cheat Sheet ═══ -->
-        <section class="cheat-sheet-section">
-            <h2 class="cheat-title neon-sign">💅 The BekiLang Cheat Sheet 💅</h2>
-            <div class="cheat-scroll-container">
-                <!-- Data Types -->
-                <div class="cheat-card polaroid heavy-tape">
-                    <h3>1. Data Types</h3>
-                    <ul>
-                        <li><span class="keyword">borta</span> (Integer) - <em>Whole numbers</em></li>
-                        <li><span class="keyword">mema</span> (Float) - <em>Decimals</em></li>
-                        <li><span class="keyword">chika</span> (String) - <em>Text ""</em></li>
-                        <li><span class="keyword">charot</span> (Char) - <em>Single ''</em></li>
-                        <li><span class="keyword">truch</span> (Bool) - <em><span class="keyword">korik</span> / <span class="keyword">wiz</span></em></li>
-                    </ul>
-                </div>
+        <!-- ═══ The verdict: front-page headline + phase strip ═══ -->
+        <section class="verdict" id="verdict" data-state="idle" aria-labelledby="headline">
+            <div class="verdict__live" aria-live="polite" aria-atomic="true">
+                <h2 class="headline" id="headline">
+                    <span class="headline__shout" id="headlineShout">Wala pang chika.</span>
+                    <span class="headline__rest" id="headlineRest">Run mo na, sis!</span>
+                </h2>
+                <p class="deck" id="deck">Write in the Burn Book or load an example, then press Run. The compiler will spill everything here.</p>
+                <p class="deck deck--recovery" id="recovery" hidden></p>
+            </div>
+            <button class="btn btn--line" id="gotoLineBtn" type="button" hidden>
+                <i class="ph-bold ph-crosshair" aria-hidden="true"></i><span>Go to line</span>
+            </button>
 
-                <!-- Operators -->
-                <div class="cheat-card polaroid heavy-tape">
-                    <h3>2. Operators</h3>
-                    <ul>
-                        <li><span class="keyword">ay</span> = Assign (<em>x ay 5</em>)</li>
-                        <li><span class="keyword">periodt</span> / <span class="keyword">ganern</span> = ;</li>
-                        <li><span class="keyword">parinig</span> = Print</li>
-                    </ul>
-                </div>
+            <ol class="phases" aria-label="Compiler phases">
+                <li class="phase" data-phase="lexer" data-state="idle">
+                    <span class="phase__name">Lexer</span>
+                    <span class="phase__role">Tagabasa ng chismis</span>
+                    <span class="phase__state"><i class="ph-bold" aria-hidden="true"></i><span>Waiting</span></span>
+                </li>
+                <li class="phase" data-phase="parser" data-state="idle">
+                    <span class="phase__name">Parser</span>
+                    <span class="phase__role">Ang Marites</span>
+                    <span class="phase__state"><i class="ph-bold" aria-hidden="true"></i><span>Waiting</span></span>
+                </li>
+                <li class="phase" data-phase="semantics" data-state="idle">
+                    <span class="phase__name">Semantics</span>
+                    <span class="phase__role">Judge ng katotohanan</span>
+                    <span class="phase__state"><i class="ph-bold" aria-hidden="true"></i><span>Waiting</span></span>
+                </li>
+            </ol>
+        </section>
 
-                <!-- Logic -->
-                <div class="cheat-card polaroid heavy-tape">
-                    <h3>3. Math & Logic</h3>
-                    <ul>
-                        <li><span class="keyword">dagdag</span> (+), <span class="keyword">bawas</span> (-)</li>
-                        <li><span class="keyword">times</span> (*), <span class="keyword">divide</span> (/)</li>
-                        <li><span class="keyword">mas_tarush</span> (>), <span class="keyword">mas_chaka</span> (<)</li>
-                        <li><span class="keyword">parehas</span> (==), <span class="keyword">wit_parehas</span> (!=)</li>
-                        <li><span class="keyword">at_saka</span> (AND), <span class="keyword">o_kaya</span> (OR)</li>
-                    </ul>
-                </div>
-
-                <!-- Control Flow -->
-                <div class="cheat-card polaroid heavy-tape">
-                    <h3>4. Control Flow</h3>
-                    <ul>
-                        <li><span class="keyword">kunwari</span> [cond] <span class="keyword">eh_di</span> [cond]</li>
-                        <li><em>(If / Else)</em></li>
-                        <li><span class="keyword">gorabel</span> [cond] { ... }</li>
-                        <li><em>(While Loop)</em></li>
-                    </ul>
-                </div>
+        <!-- ═══ Program output ═══ -->
+        <section class="chika" aria-labelledby="chikaTitle">
+            <div class="bar">
+                <h2 class="bar__title" id="chikaTitle">Ang Chika</h2>
+                <p class="bar__meta">Program output</p>
+            </div>
+            <div class="console" id="consoleOutput">
+                <p class="empty">No output yet. Every <code>parinig</code> line lands here when you run.</p>
             </div>
         </section>
-    </div>
 
-    <!-- Custom Kiss Cursor -->
-    <div id="custom-cursor" class="custom-cursor">💋</div>
+        <!-- ═══ Symbol table ═══ -->
+        <section class="memory" aria-labelledby="memoryTitle">
+            <div class="bar">
+                <h2 class="bar__title" id="memoryTitle">Memory Map</h2>
+                <p class="bar__meta">Symbol table</p>
+            </div>
+            <div class="table-wrap">
+                <table class="symbols">
+                    <thead>
+                        <tr>
+                            <th scope="col">Identifier</th>
+                            <th scope="col">Type</th>
+                            <th scope="col" class="num">Level</th>
+                            <th scope="col" class="num">Offset</th>
+                        </tr>
+                    </thead>
+                    <tbody id="symbolTableBody">
+                        <tr class="symbols__empty"><td colspan="4">No variables declared yet.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="memory__hint" id="memoryHint" hidden>Click a name to jump to where it was declared.</p>
+        </section>
+
+        <!-- ═══ Story Time: one bylined column per compiler phase ═══ -->
+        <section class="story" aria-labelledby="storyTitle">
+            <div class="bar">
+                <h2 class="bar__title" id="storyTitle">Story Time</h2>
+                <p class="bar__meta">What each phase saw, in plain words</p>
+            </div>
+            <div class="story__columns">
+                <article class="report" id="storyLexer" aria-labelledby="storyLexerTitle">
+                    <header class="report__byline">
+                        <h3 class="report__name" id="storyLexerTitle">Sabi ng Lexer</h3>
+                        <p class="report__role">Ang Tagabasa ng Chismis</p>
+                    </header>
+                    <div class="report__body"><p class="empty">Waiting for the tea.</p></div>
+                </article>
+                <article class="report" id="storyParser" aria-labelledby="storyParserTitle">
+                    <header class="report__byline">
+                        <h3 class="report__name" id="storyParserTitle">Sabi ng Parser</h3>
+                        <p class="report__role">Ang Marites na taga-connect ng kwento</p>
+                    </header>
+                    <div class="report__body"><p class="empty">Waiting for the tea.</p></div>
+                </article>
+                <article class="report" id="storySemantics" aria-labelledby="storySemanticsTitle">
+                    <header class="report__byline">
+                        <h3 class="report__name" id="storySemanticsTitle">Sabi ng Semantic Analyzer</h3>
+                        <p class="report__role">Ang Judge ng Katotohanan</p>
+                    </header>
+                    <div class="report__body"><p class="empty">Waiting for the tea.</p></div>
+                </article>
+            </div>
+        </section>
+
+        <!-- ═══ Full analysis log ═══ -->
+        <section class="transcript" aria-labelledby="logTitle">
+            <details class="transcript__details" id="logDetails">
+                <summary class="bar bar--summary">
+                    <h2 class="bar__title" id="logTitle">Ang Buong Transcript</h2>
+                    <p class="bar__meta">Analysis log: every token, rule and check</p>
+                    <i class="ph-bold ph-caret-down bar__caret" aria-hidden="true"></i>
+                </summary>
+                <div class="transcript__body" id="analysisOutput">
+                    <p class="empty">Run your code to see the full compiler log.</p>
+                </div>
+            </details>
+        </section>
+    </main>
+
+    <!-- ═══ Cheat sheet, laid out like the classifieds ═══ -->
+    <section class="classifieds" id="cheatsheet" aria-labelledby="cheatTitle">
+        <div class="classifieds__head">
+            <h2 class="classifieds__title" id="cheatTitle">The BekiLang Cheat Sheet</h2>
+            <p class="classifieds__note">Tap any keyword to drop it into the editor at your cursor.</p>
+        </div>
+        <div class="classifieds__grid">
+            <article class="ad">
+                <h3 class="ad__title">Data types</h3>
+                <p class="ad__sub">Mga uri ng chika</p>
+                <dl class="ad__list">
+                    <div><dt><button class="kw kw--type" type="button">borta</button></dt><dd>Integer. Whole numbers.</dd></div>
+                    <div><dt><button class="kw kw--type" type="button">mema</button></dt><dd>Float. Decimals.</dd></div>
+                    <div><dt><button class="kw kw--type" type="button">chika</button></dt><dd>String, in <code>"double quotes"</code>.</dd></div>
+                    <div><dt><button class="kw kw--type" type="button">charot</button></dt><dd>Char, one letter in <code>'single'</code>.</dd></div>
+                    <div><dt><button class="kw kw--type" type="button">truch</button></dt><dd>Boolean: <button class="kw kw--lit" type="button">korik</button> or <button class="kw kw--lit" type="button">wiz</button></dd></div>
+                </dl>
+                <pre class="ad__example"><code>truch maganda_ako ay korik periodt</code></pre>
+            </article>
+
+            <article class="ad">
+                <h3 class="ad__title">Statements</h3>
+                <p class="ad__sub">Pag-angkin at parinig</p>
+                <dl class="ad__list">
+                    <div><dt><button class="kw kw--op" type="button">ay</button></dt><dd>Assign, like <code>=</code></dd></div>
+                    <div><dt><button class="kw kw--end" type="button">periodt</button></dt><dd>Ends a statement, like <code>;</code></dd></div>
+                    <div><dt><button class="kw kw--end" type="button">ganern</button></dt><dd>Also ends a statement.</dd></div>
+                    <div><dt><button class="kw kw--ctl" type="button">parinig</button></dt><dd>Print to Ang Chika.</dd></div>
+                    <div><dt><code class="kw-static">//</code></dt><dd>Comment. Secret lang natin.</dd></div>
+                </dl>
+                <pre class="ad__example"><code>borta score ay 100 periodt
+parinig score ganern</code></pre>
+            </article>
+
+            <article class="ad">
+                <h3 class="ad__title">Math</h3>
+                <p class="ad__sub">Bilangan</p>
+                <dl class="ad__list ad__list--pairs">
+                    <div><dt><button class="kw kw--op" type="button">dagdag</button></dt><dd><code>+</code> Add, or join strings</dd></div>
+                    <div><dt><button class="kw kw--op" type="button">bawas</button></dt><dd><code>-</code> Subtract</dd></div>
+                    <div><dt><button class="kw kw--op" type="button">times</button></dt><dd><code>*</code> Multiply</dd></div>
+                    <div><dt><button class="kw kw--op" type="button">divide</button></dt><dd><code>/</code> Divide</dd></div>
+                </dl>
+                <pre class="ad__example"><code>borta total ay 10 dagdag 5 periodt</code></pre>
+            </article>
+
+            <article class="ad">
+                <h3 class="ad__title">Compare</h3>
+                <p class="ad__sub">Labanan ng tarush</p>
+                <dl class="ad__list ad__list--pairs">
+                    <div><dt><button class="kw kw--op" type="button">mas_tarush</button></dt><dd><code>&gt;</code> Greater than</dd></div>
+                    <div><dt><button class="kw kw--op" type="button">mas_chaka</button></dt><dd><code>&lt;</code> Less than</dd></div>
+                    <div><dt><button class="kw kw--op" type="button">parehas</button></dt><dd><code>==</code> Equal</dd></div>
+                    <div><dt><button class="kw kw--op" type="button">wit_parehas</button></dt><dd><code>!=</code> Not equal</dd></div>
+                </dl>
+            </article>
+
+            <article class="ad">
+                <h3 class="ad__title">Logic</h3>
+                <p class="ad__sub">Dugtungan</p>
+                <dl class="ad__list ad__list--pairs">
+                    <div><dt><button class="kw kw--op" type="button">at_saka</button></dt><dd>AND</dd></div>
+                    <div><dt><button class="kw kw--op" type="button">o_kaya</button></dt><dd>OR</dd></div>
+                </dl>
+                <pre class="ad__example"><code>kunwari is_vip parehas korik at_saka tickets mas_tarush 0 { … }</code></pre>
+            </article>
+
+            <article class="ad ad--wide">
+                <h3 class="ad__title">Control flow</h3>
+                <p class="ad__sub">Ang mga kabanata</p>
+                <dl class="ad__list">
+                    <div><dt><button class="kw kw--ctl" type="button">kunwari</button></dt><dd>If. No parentheses needed; the block goes in <code>{ }</code>.</dd></div>
+                    <div><dt><button class="kw kw--ctl" type="button">eh_di</button></dt><dd>Else, right after the closing <code>}</code>.</dd></div>
+                    <div><dt><button class="kw kw--ctl" type="button">gorabel</button></dt><dd>While. Repeats as long as the condition is <code>korik</code>.</dd></div>
+                </dl>
+                <pre class="ad__example"><code>borta count ay 1 periodt
+gorabel count mas_chaka 4 {
+    parinig "Bilang: " dagdag count ganern
+    count ay count dagdag 1 periodt
+}</code></pre>
+            </article>
+        </div>
+    </section>
+
+    <footer class="colophon">
+        <p>BekiLang Studio. Built on a real lexer, parser and semantic analyzer. Happy coding, sis!</p>
+    </footer>
+
+    <p class="toast" id="toast" role="status" aria-live="polite"></p>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
