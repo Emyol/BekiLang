@@ -1,0 +1,5 @@
+__pycache__/
+
+# impeccable working files: verification screenshots and decision-page logs
+.impeccable/review/
+.impeccable/questions/
