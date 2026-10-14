@@ -1,0 +1,967 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-14T17:06:57+00:00",
+  "title": "Design System: BekiLang Studio",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "Newsprint",
+        "canonical": "oklch(94.6% 0.005 95.1)",
+        "tonalRamp": [
+          "oklch(15.0% 0.005 95.1)",
+          "oklch(26.4% 0.005 95.1)",
+          "oklch(37.9% 0.005 95.1)",
+          "oklch(49.3% 0.005 95.1)",
+          "oklch(60.7% 0.005 95.1)",
+          "oklch(72.1% 0.005 95.1)",
+          "oklch(83.6% 0.005 95.1)",
+          "oklch(95.0% 0.005 95.1)"
+        ]
+      },
+      "paper-2": {
+        "role": "neutral",
+        "displayName": "Newsprint Shade",
+        "canonical": "oklch(91.0% 0.008 91.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.008 91.5)",
+          "oklch(26.4% 0.008 91.5)",
+          "oklch(37.9% 0.008 91.5)",
+          "oklch(49.3% 0.008 91.5)",
+          "oklch(60.7% 0.008 91.5)",
+          "oklch(72.1% 0.008 91.5)",
+          "oklch(83.6% 0.008 91.5)",
+          "oklch(95.0% 0.008 91.5)"
+        ]
+      },
+      "sheet": {
+        "role": "neutral",
+        "displayName": "Fresh Sheet",
+        "canonical": "oklch(97.9% 0.004 91.4)",
+        "tonalRamp": [
+          "oklch(15.0% 0.004 91.4)",
+          "oklch(26.4% 0.004 91.4)",
+          "oklch(37.9% 0.004 91.4)",
+          "oklch(49.3% 0.004 91.4)",
+          "oklch(60.7% 0.004 91.4)",
+          "oklch(72.1% 0.004 91.4)",
+          "oklch(83.6% 0.004 91.4)",
+          "oklch(95.0% 0.004 91.4)"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Press Ink",
+        "canonical": "oklch(19.6% 0.000 89.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.000 89.9)",
+          "oklch(26.4% 0.000 89.9)",
+          "oklch(37.9% 0.000 89.9)",
+          "oklch(49.3% 0.000 89.9)",
+          "oklch(60.7% 0.000 89.9)",
+          "oklch(72.1% 0.000 89.9)",
+          "oklch(83.6% 0.000 89.9)",
+          "oklch(95.0% 0.000 89.9)"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Ink 2",
+        "canonical": "oklch(38.6% 0.008 97.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.008 97.5)",
+          "oklch(26.4% 0.008 97.5)",
+          "oklch(37.9% 0.008 97.5)",
+          "oklch(49.3% 0.008 97.5)",
+          "oklch(60.7% 0.008 97.5)",
+          "oklch(72.1% 0.008 97.5)",
+          "oklch(83.6% 0.008 97.5)",
+          "oklch(95.0% 0.008 97.5)"
+        ]
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "Ink 3",
+        "canonical": "oklch(50.3% 0.010 91.6)",
+        "tonalRamp": [
+          "oklch(15.0% 0.010 91.6)",
+          "oklch(26.4% 0.010 91.6)",
+          "oklch(37.9% 0.010 91.6)",
+          "oklch(49.3% 0.010 91.6)",
+          "oklch(60.7% 0.010 91.6)",
+          "oklch(72.1% 0.010 91.6)",
+          "oklch(83.6% 0.010 91.6)",
+          "oklch(95.0% 0.010 91.6)"
+        ]
+      },
+      "rule-soft": {
+        "role": "neutral",
+        "displayName": "Soft Rule",
+        "canonical": "oklch(82.7% 0.012 89.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.012 89.7)",
+          "oklch(26.4% 0.012 89.7)",
+          "oklch(37.9% 0.012 89.7)",
+          "oklch(49.3% 0.012 89.7)",
+          "oklch(60.7% 0.012 89.7)",
+          "oklch(72.1% 0.012 89.7)",
+          "oklch(83.6% 0.012 89.7)",
+          "oklch(95.0% 0.012 89.7)"
+        ]
+      },
+      "red": {
+        "role": "primary",
+        "displayName": "Tabloid Red",
+        "canonical": "oklch(55.1% 0.209 28.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.075 28.7)",
+          "oklch(26.4% 0.113 28.7)",
+          "oklch(37.9% 0.152 28.7)",
+          "oklch(49.3% 0.190 28.7)",
+          "oklch(60.7% 0.190 28.7)",
+          "oklch(72.1% 0.152 28.7)",
+          "oklch(83.6% 0.113 28.7)",
+          "oklch(95.0% 0.075 28.7)"
+        ]
+      },
+      "red-text": {
+        "role": "primary",
+        "displayName": "Headline Red Ink",
+        "canonical": "oklch(51.4% 0.196 29.0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.070 29.0)",
+          "oklch(26.4% 0.106 29.0)",
+          "oklch(37.9% 0.142 29.0)",
+          "oklch(49.3% 0.178 29.0)",
+          "oklch(60.7% 0.178 29.0)",
+          "oklch(72.1% 0.142 29.0)",
+          "oklch(83.6% 0.106 29.0)",
+          "oklch(95.0% 0.070 29.0)"
+        ]
+      },
+      "on-red": {
+        "role": "neutral",
+        "displayName": "On-Red White",
+        "canonical": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.000 89.9)",
+          "oklch(26.4% 0.000 89.9)",
+          "oklch(37.9% 0.000 89.9)",
+          "oklch(49.3% 0.000 89.9)",
+          "oklch(60.7% 0.000 89.9)",
+          "oklch(72.1% 0.000 89.9)",
+          "oklch(83.6% 0.000 89.9)",
+          "oklch(95.0% 0.000 89.9)"
+        ]
+      },
+      "yellow": {
+        "role": "secondary",
+        "displayName": "Highlighter Yellow",
+        "canonical": "oklch(88.5% 0.181 94.8)",
+        "tonalRamp": [
+          "oklch(15.0% 0.065 94.8)",
+          "oklch(26.4% 0.098 94.8)",
+          "oklch(37.9% 0.131 94.8)",
+          "oklch(49.3% 0.164 94.8)",
+          "oklch(60.7% 0.164 94.8)",
+          "oklch(72.1% 0.131 94.8)",
+          "oklch(83.6% 0.098 94.8)",
+          "oklch(95.0% 0.065 94.8)"
+        ]
+      },
+      "on-yellow": {
+        "role": "neutral",
+        "displayName": "On-Yellow Ink",
+        "canonical": "oklch(19.6% 0.000 89.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.000 89.9)",
+          "oklch(26.4% 0.000 89.9)",
+          "oklch(37.9% 0.000 89.9)",
+          "oklch(49.3% 0.000 89.9)",
+          "oklch(60.7% 0.000 89.9)",
+          "oklch(72.1% 0.000 89.9)",
+          "oklch(83.6% 0.000 89.9)",
+          "oklch(95.0% 0.000 89.9)"
+        ]
+      },
+      "error-wash": {
+        "role": "primary",
+        "displayName": "Error Wash",
+        "canonical": "rgba(208, 32, 26, 0.12)",
+        "tonalRamp": [
+          "oklch(15.0% 0.075 28.7)",
+          "oklch(26.4% 0.113 28.7)",
+          "oklch(37.9% 0.152 28.7)",
+          "oklch(49.3% 0.190 28.7)",
+          "oklch(60.7% 0.190 28.7)",
+          "oklch(72.1% 0.152 28.7)",
+          "oklch(83.6% 0.113 28.7)",
+          "oklch(95.0% 0.075 28.7)"
+        ]
+      },
+      "bar-bg": {
+        "role": "neutral",
+        "displayName": "Reverse Bar",
+        "canonical": "oklch(19.6% 0.000 89.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.000 89.9)",
+          "oklch(26.4% 0.000 89.9)",
+          "oklch(37.9% 0.000 89.9)",
+          "oklch(49.3% 0.000 89.9)",
+          "oklch(60.7% 0.000 89.9)",
+          "oklch(72.1% 0.000 89.9)",
+          "oklch(83.6% 0.000 89.9)",
+          "oklch(95.0% 0.000 89.9)"
+        ]
+      },
+      "bar-fg": {
+        "role": "neutral",
+        "displayName": "Reverse Bar Type",
+        "canonical": "oklch(94.6% 0.005 95.1)",
+        "tonalRamp": [
+          "oklch(15.0% 0.005 95.1)",
+          "oklch(26.4% 0.005 95.1)",
+          "oklch(37.9% 0.005 95.1)",
+          "oklch(49.3% 0.005 95.1)",
+          "oklch(60.7% 0.005 95.1)",
+          "oklch(72.1% 0.005 95.1)",
+          "oklch(83.6% 0.005 95.1)",
+          "oklch(95.0% 0.005 95.1)"
+        ]
+      },
+      "syn-type": {
+        "role": "tertiary",
+        "displayName": "Type Blue",
+        "canonical": "oklch(46.2% 0.174 262.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.063 262.9)",
+          "oklch(26.4% 0.095 262.9)",
+          "oklch(37.9% 0.127 262.9)",
+          "oklch(49.3% 0.158 262.9)",
+          "oklch(60.7% 0.158 262.9)",
+          "oklch(72.1% 0.127 262.9)",
+          "oklch(83.6% 0.095 262.9)",
+          "oklch(95.0% 0.063 262.9)"
+        ]
+      },
+      "syn-ctl": {
+        "role": "tertiary",
+        "displayName": "Control Purple",
+        "canonical": "oklch(45.2% 0.198 312.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.071 312.5)",
+          "oklch(26.4% 0.108 312.5)",
+          "oklch(37.9% 0.144 312.5)",
+          "oklch(49.3% 0.180 312.5)",
+          "oklch(60.7% 0.180 312.5)",
+          "oklch(72.1% 0.144 312.5)",
+          "oklch(83.6% 0.108 312.5)",
+          "oklch(95.0% 0.071 312.5)"
+        ]
+      },
+      "syn-op": {
+        "role": "tertiary",
+        "displayName": "Operator Ink",
+        "canonical": "oklch(38.6% 0.008 97.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.008 97.5)",
+          "oklch(26.4% 0.008 97.5)",
+          "oklch(37.9% 0.008 97.5)",
+          "oklch(49.3% 0.008 97.5)",
+          "oklch(60.7% 0.008 97.5)",
+          "oklch(72.1% 0.008 97.5)",
+          "oklch(83.6% 0.008 97.5)",
+          "oklch(95.0% 0.008 97.5)"
+        ]
+      },
+      "syn-end": {
+        "role": "tertiary",
+        "displayName": "Terminator Ochre",
+        "canonical": "oklch(51.7% 0.106 89.4)",
+        "tonalRamp": [
+          "oklch(15.0% 0.038 89.4)",
+          "oklch(26.4% 0.057 89.4)",
+          "oklch(37.9% 0.077 89.4)",
+          "oklch(49.3% 0.096 89.4)",
+          "oklch(60.7% 0.096 89.4)",
+          "oklch(72.1% 0.077 89.4)",
+          "oklch(83.6% 0.057 89.4)",
+          "oklch(95.0% 0.038 89.4)"
+        ]
+      },
+      "syn-str": {
+        "role": "tertiary",
+        "displayName": "String Green",
+        "canonical": "oklch(47.9% 0.109 157.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.039 157.3)",
+          "oklch(26.4% 0.059 157.3)",
+          "oklch(37.9% 0.079 157.3)",
+          "oklch(49.3% 0.099 157.3)",
+          "oklch(60.7% 0.099 157.3)",
+          "oklch(72.1% 0.079 157.3)",
+          "oklch(83.6% 0.059 157.3)",
+          "oklch(95.0% 0.039 157.3)"
+        ]
+      },
+      "syn-num": {
+        "role": "tertiary",
+        "displayName": "Literal Rust",
+        "canonical": "oklch(51.2% 0.137 47.0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.049 47.0)",
+          "oklch(26.4% 0.074 47.0)",
+          "oklch(37.9% 0.099 47.0)",
+          "oklch(49.3% 0.124 47.0)",
+          "oklch(60.7% 0.124 47.0)",
+          "oklch(72.1% 0.099 47.0)",
+          "oklch(83.6% 0.074 47.0)",
+          "oklch(95.0% 0.049 47.0)"
+        ]
+      },
+      "syn-comment": {
+        "role": "tertiary",
+        "displayName": "Comment Grey",
+        "canonical": "oklch(51.7% 0.011 93.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.011 93.7)",
+          "oklch(26.4% 0.011 93.7)",
+          "oklch(37.9% 0.011 93.7)",
+          "oklch(49.3% 0.011 93.7)",
+          "oklch(60.7% 0.011 93.7)",
+          "oklch(72.1% 0.011 93.7)",
+          "oklch(83.6% 0.011 93.7)",
+          "oklch(95.0% 0.011 93.7)"
+        ]
+      },
+      "night-paper": {
+        "role": "neutral",
+        "displayName": "Night Newsprint",
+        "canonical": "oklch(18.6% 0.002 106.6)",
+        "tonalRamp": [
+          "oklch(15.0% 0.002 106.6)",
+          "oklch(26.4% 0.002 106.6)",
+          "oklch(37.9% 0.002 106.6)",
+          "oklch(49.3% 0.002 106.6)",
+          "oklch(60.7% 0.002 106.6)",
+          "oklch(72.1% 0.002 106.6)",
+          "oklch(83.6% 0.002 106.6)",
+          "oklch(95.0% 0.002 106.6)"
+        ],
+        "edition": "night",
+        "dayCounterpart": "paper"
+      },
+      "night-paper-2": {
+        "role": "neutral",
+        "displayName": "Night Newsprint Shade",
+        "canonical": "oklch(23.0% 0.004 106.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.004 106.7)",
+          "oklch(26.4% 0.004 106.7)",
+          "oklch(37.9% 0.004 106.7)",
+          "oklch(49.3% 0.004 106.7)",
+          "oklch(60.7% 0.004 106.7)",
+          "oklch(72.1% 0.004 106.7)",
+          "oklch(83.6% 0.004 106.7)",
+          "oklch(95.0% 0.004 106.7)"
+        ],
+        "edition": "night",
+        "dayCounterpart": "paper-2"
+      },
+      "night-sheet": {
+        "role": "neutral",
+        "displayName": "Night Fresh Sheet",
+        "canonical": "oklch(20.8% 0.004 106.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.004 106.7)",
+          "oklch(26.4% 0.004 106.7)",
+          "oklch(37.9% 0.004 106.7)",
+          "oklch(49.3% 0.004 106.7)",
+          "oklch(60.7% 0.004 106.7)",
+          "oklch(72.1% 0.004 106.7)",
+          "oklch(83.6% 0.004 106.7)",
+          "oklch(95.0% 0.004 106.7)"
+        ],
+        "edition": "night",
+        "dayCounterpart": "sheet"
+      },
+      "night-ink": {
+        "role": "neutral",
+        "displayName": "Night Press Ink",
+        "canonical": "oklch(94.0% 0.007 88.6)",
+        "tonalRamp": [
+          "oklch(15.0% 0.007 88.6)",
+          "oklch(26.4% 0.007 88.6)",
+          "oklch(37.9% 0.007 88.6)",
+          "oklch(49.3% 0.007 88.6)",
+          "oklch(60.7% 0.007 88.6)",
+          "oklch(72.1% 0.007 88.6)",
+          "oklch(83.6% 0.007 88.6)",
+          "oklch(95.0% 0.007 88.6)"
+        ],
+        "edition": "night",
+        "dayCounterpart": "ink"
+      },
+      "night-ink-2": {
+        "role": "neutral",
+        "displayName": "Night Ink 2",
+        "canonical": "oklch(80.5% 0.012 89.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.012 89.7)",
+          "oklch(26.4% 0.012 89.7)",
+          "oklch(37.9% 0.012 89.7)",
+          "oklch(49.3% 0.012 89.7)",
+          "oklch(60.7% 0.012 89.7)",
+          "oklch(72.1% 0.012 89.7)",
+          "oklch(83.6% 0.012 89.7)",
+          "oklch(95.0% 0.012 89.7)"
+        ],
+        "edition": "night",
+        "dayCounterpart": "ink-2"
+      },
+      "night-ink-3": {
+        "role": "neutral",
+        "displayName": "Night Ink 3",
+        "canonical": "oklch(66.3% 0.012 89.8)",
+        "tonalRamp": [
+          "oklch(15.0% 0.012 89.8)",
+          "oklch(26.4% 0.012 89.8)",
+          "oklch(37.9% 0.012 89.8)",
+          "oklch(49.3% 0.012 89.8)",
+          "oklch(60.7% 0.012 89.8)",
+          "oklch(72.1% 0.012 89.8)",
+          "oklch(83.6% 0.012 89.8)",
+          "oklch(95.0% 0.012 89.8)"
+        ],
+        "edition": "night",
+        "dayCounterpart": "ink-3"
+      },
+      "night-rule-soft": {
+        "role": "neutral",
+        "displayName": "Night Soft Rule",
+        "canonical": "oklch(34.5% 0.005 91.5)",
+        "tonalRamp": [
+          "oklch(15.0% 0.005 91.5)",
+          "oklch(26.4% 0.005 91.5)",
+          "oklch(37.9% 0.005 91.5)",
+          "oklch(49.3% 0.005 91.5)",
+          "oklch(60.7% 0.005 91.5)",
+          "oklch(72.1% 0.005 91.5)",
+          "oklch(83.6% 0.005 91.5)",
+          "oklch(95.0% 0.005 91.5)"
+        ],
+        "edition": "night",
+        "dayCounterpart": "rule-soft"
+      },
+      "night-red": {
+        "role": "primary",
+        "displayName": "Night Tabloid Red",
+        "canonical": "oklch(56.5% 0.206 29.0)",
+        "tonalRamp": [
+          "oklch(15.0% 0.074 29.0)",
+          "oklch(26.4% 0.112 29.0)",
+          "oklch(37.9% 0.150 29.0)",
+          "oklch(49.3% 0.187 29.0)",
+          "oklch(60.7% 0.187 29.0)",
+          "oklch(72.1% 0.150 29.0)",
+          "oklch(83.6% 0.112 29.0)",
+          "oklch(95.0% 0.074 29.0)"
+        ],
+        "edition": "night",
+        "dayCounterpart": "red"
+      },
+      "night-red-text": {
+        "role": "primary",
+        "displayName": "Night Headline Red Ink",
+        "canonical": "oklch(70.9% 0.183 27.7)",
+        "tonalRamp": [
+          "oklch(15.0% 0.066 27.7)",
+          "oklch(26.4% 0.099 27.7)",
+          "oklch(37.9% 0.133 27.7)",
+          "oklch(49.3% 0.166 27.7)",
+          "oklch(60.7% 0.166 27.7)",
+          "oklch(72.1% 0.133 27.7)",
+          "oklch(83.6% 0.099 27.7)",
+          "oklch(95.0% 0.066 27.7)"
+        ],
+        "edition": "night",
+        "dayCounterpart": "red-text"
+      },
+      "night-error-wash": {
+        "role": "primary",
+        "displayName": "Night Error Wash",
+        "canonical": "rgba(255, 107, 94, 0.16)",
+        "tonalRamp": [
+          "oklch(15.0% 0.066 27.7)",
+          "oklch(26.4% 0.099 27.7)",
+          "oklch(37.9% 0.133 27.7)",
+          "oklch(49.3% 0.166 27.7)",
+          "oklch(60.7% 0.166 27.7)",
+          "oklch(72.1% 0.133 27.7)",
+          "oklch(83.6% 0.099 27.7)",
+          "oklch(95.0% 0.066 27.7)"
+        ],
+        "edition": "night",
+        "dayCounterpart": "error-wash"
+      },
+      "night-bar-bg": {
+        "role": "neutral",
+        "displayName": "Night Reverse Bar",
+        "canonical": "oklch(28.9% 0.006 91.6)",
+        "tonalRamp": [
+          "oklch(15.0% 0.006 91.6)",
+          "oklch(26.4% 0.006 91.6)",
+          "oklch(37.9% 0.006 91.6)",
+          "oklch(49.3% 0.006 91.6)",
+          "oklch(60.7% 0.006 91.6)",
+          "oklch(72.1% 0.006 91.6)",
+          "oklch(83.6% 0.006 91.6)",
+          "oklch(95.0% 0.006 91.6)"
+        ],
+        "edition": "night",
+        "dayCounterpart": "bar-bg"
+      },
+      "night-syn-type": {
+        "role": "tertiary",
+        "displayName": "Night Type Blue",
+        "canonical": "oklch(73.8% 0.134 264.2)",
+        "tonalRamp": [
+          "oklch(15.0% 0.048 264.2)",
+          "oklch(26.4% 0.073 264.2)",
+          "oklch(37.9% 0.098 264.2)",
+          "oklch(49.3% 0.122 264.2)",
+          "oklch(60.7% 0.122 264.2)",
+          "oklch(72.1% 0.098 264.2)",
+          "oklch(83.6% 0.073 264.2)",
+          "oklch(95.0% 0.048 264.2)"
+        ],
+        "edition": "night",
+        "dayCounterpart": "syn-type"
+      },
+      "night-syn-ctl": {
+        "role": "tertiary",
+        "displayName": "Night Control Purple",
+        "canonical": "oklch(78.5% 0.151 311.8)",
+        "tonalRamp": [
+          "oklch(15.0% 0.055 311.8)",
+          "oklch(26.4% 0.082 311.8)",
+          "oklch(37.9% 0.110 311.8)",
+          "oklch(49.3% 0.138 311.8)",
+          "oklch(60.7% 0.138 311.8)",
+          "oklch(72.1% 0.110 311.8)",
+          "oklch(83.6% 0.082 311.8)",
+          "oklch(95.0% 0.055 311.8)"
+        ],
+        "edition": "night",
+        "dayCounterpart": "syn-ctl"
+      },
+      "night-syn-end": {
+        "role": "tertiary",
+        "displayName": "Night Terminator Ochre",
+        "canonical": "oklch(83.1% 0.143 91.9)",
+        "tonalRamp": [
+          "oklch(15.0% 0.051 91.9)",
+          "oklch(26.4% 0.078 91.9)",
+          "oklch(37.9% 0.104 91.9)",
+          "oklch(49.3% 0.130 91.9)",
+          "oklch(60.7% 0.130 91.9)",
+          "oklch(72.1% 0.104 91.9)",
+          "oklch(83.6% 0.078 91.9)",
+          "oklch(95.0% 0.051 91.9)"
+        ],
+        "edition": "night",
+        "dayCounterpart": "syn-end"
+      },
+      "night-syn-str": {
+        "role": "tertiary",
+        "displayName": "Night String Green",
+        "canonical": "oklch(80.0% 0.123 159.8)",
+        "tonalRamp": [
+          "oklch(15.0% 0.044 159.8)",
+          "oklch(26.4% 0.067 159.8)",
+          "oklch(37.9% 0.089 159.8)",
+          "oklch(49.3% 0.112 159.8)",
+          "oklch(60.7% 0.112 159.8)",
+          "oklch(72.1% 0.089 159.8)",
+          "oklch(83.6% 0.067 159.8)",
+          "oklch(95.0% 0.044 159.8)"
+        ],
+        "edition": "night",
+        "dayCounterpart": "syn-str"
+      },
+      "night-syn-num": {
+        "role": "tertiary",
+        "displayName": "Night Literal Rust",
+        "canonical": "oklch(80.9% 0.128 56.3)",
+        "tonalRamp": [
+          "oklch(15.0% 0.046 56.3)",
+          "oklch(26.4% 0.069 56.3)",
+          "oklch(37.9% 0.093 56.3)",
+          "oklch(49.3% 0.116 56.3)",
+          "oklch(60.7% 0.116 56.3)",
+          "oklch(72.1% 0.093 56.3)",
+          "oklch(83.6% 0.069 56.3)",
+          "oklch(95.0% 0.046 56.3)"
+        ],
+        "edition": "night",
+        "dayCounterpart": "syn-num"
+      },
+      "night-syn-comment": {
+        "role": "tertiary",
+        "displayName": "Night Comment Grey",
+        "canonical": "oklch(62.4% 0.012 89.8)",
+        "tonalRamp": [
+          "oklch(15.0% 0.012 89.8)",
+          "oklch(26.4% 0.012 89.8)",
+          "oklch(37.9% 0.012 89.8)",
+          "oklch(49.3% 0.012 89.8)",
+          "oklch(60.7% 0.012 89.8)",
+          "oklch(72.1% 0.012 89.8)",
+          "oklch(83.6% 0.012 89.8)",
+          "oklch(95.0% 0.012 89.8)"
+        ],
+        "edition": "night",
+        "dayCounterpart": "syn-comment"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Nameplate",
+        "purpose": "The BekiLang nameplate only. Archivo 900 at 62% width, uppercase."
+      },
+      "headline": {
+        "displayName": "Verdict Headline",
+        "purpose": "The compiler verdict; first phrase set as a shout block."
+      },
+      "headline-section": {
+        "displayName": "Section Headline",
+        "purpose": "Page-level heads outside the front grid, such as the cheat sheet."
+      },
+      "title-bar": {
+        "displayName": "Bar Title",
+        "purpose": "Reverse-type section bar titles."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Reporter names, classified ad titles, phase names (1.25rem), Run label (1.45rem). 75% width."
+      },
+      "deck": {
+        "displayName": "Deck",
+        "purpose": "Serif standfirst under the verdict headline, max 62ch."
+      },
+      "body-serif": {
+        "displayName": "Report Body",
+        "purpose": "Story Time prose, max 65ch. Italic serif carries asides: tagline, roles, ad subtitles, colophon."
+      },
+      "body": {
+        "displayName": "UI Body",
+        "purpose": "Controls and definitions; buttons at 700."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Field labels and small UI captions."
+      },
+      "label-caps": {
+        "displayName": "Label Caps",
+        "purpose": "Table column headers and transcript sub-section titles only."
+      },
+      "code": {
+        "displayName": "Editor Code",
+        "purpose": "The editor. 15.5px base; clamp(15.5px, 0.2rem + 0.9vw, 17px) at 1280px+, 14.5px under 720px. Ligatures off."
+      },
+      "code-small": {
+        "displayName": "Data Mono",
+        "purpose": "Console output, keyword chips, symbol data."
+      }
+    },
+    "shadows": [],
+    "rules": [
+      {
+        "name": "rule-heavy",
+        "value": "4px solid var(--ink)",
+        "purpose": "Closes the dateline, tops the phase strip, underlines the cheat sheet head."
+      },
+      {
+        "name": "rule-container",
+        "value": "2px solid var(--ink)",
+        "purpose": "Strokes every container, button, select and byline underline; tops each section bar."
+      },
+      {
+        "name": "rule-hairline",
+        "value": "1px solid var(--rule-soft)",
+        "purpose": "Column rules, table rows, phase and ad dividers."
+      },
+      {
+        "name": "rule-dotted",
+        "value": "1px dotted var(--rule-soft)",
+        "purpose": "Token list rows in the transcript only."
+      }
+    ],
+    "textures": [
+      {
+        "name": "nameplate-halftone",
+        "value": "radial-gradient(circle, rgba(255, 255, 255, 0.28) 1.2px, transparent 1.7px) 0 0 / 7px 7px; mask-image: linear-gradient(100deg, transparent 38%, #000 100%)",
+        "purpose": "Four-colour press dot screen on the red nameplate plate only."
+      }
+    ],
+    "focus": [
+      {
+        "name": "focus-ring",
+        "value": "outline: 3px solid var(--ink); outline-offset: 2px",
+        "purpose": "Global :focus-visible."
+      },
+      {
+        "name": "editor-focus",
+        "value": "outline: 3px solid var(--yellow); outline-offset: 0",
+        "purpose": "Editor :focus-within."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.23, 1, 0.32, 1)",
+        "purpose": "Shared easing for presses, flips, the headline press, caret and toast."
+      },
+      {
+        "name": "press",
+        "value": "transform: scale(0.97) over 140ms ease-out (keyword chips 0.96)",
+        "purpose": "Active state on buttons and chips."
+      },
+      {
+        "name": "hover-colour",
+        "value": "background-color, color 150ms ease",
+        "purpose": "Hover fills; only under (hover: hover) and (pointer: fine)."
+      },
+      {
+        "name": "headline-press",
+        "value": "clip-path inset(0 0 100% 0) to inset(0) with translateY(-6px) to 0, 360ms ease-out; 160ms opacity fade under reduced motion",
+        "purpose": "Each new verdict is printed in from the top edge."
+      },
+      {
+        "name": "phase-flip",
+        "value": "rotateX(-75deg) opacity 0.35 to rotateX(0) opacity 1, 280ms ease-out, delay 140ms + 110ms per cell, perspective 600px",
+        "purpose": "Departure-board restyle of the phase strip; skipped under reduced motion."
+      },
+      {
+        "name": "phase-colour",
+        "value": "background-color, color 180ms ease",
+        "purpose": "Phase cell state change."
+      },
+      {
+        "name": "caret-rotate",
+        "value": "rotate(180deg) 200ms ease-out",
+        "purpose": "Transcript disclosure caret."
+      },
+      {
+        "name": "toast",
+        "value": "opacity 180ms ease, translateY(16px to 0) 220ms ease-out",
+        "purpose": "Toast rise."
+      },
+      {
+        "name": "spin",
+        "value": "rotate 360deg linear infinite, 700ms (Run busy) / 800ms (phase running)",
+        "purpose": "Busy indicators."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "transitions limited to background-color, color, border-color, opacity; animations to 0.01ms",
+        "purpose": "Keep colour changes, drop movement."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide",
+        "value": "1280px",
+        "purpose": "min-width: 7fr/5fr front grid with column rule; larger code size."
+      },
+      {
+        "name": "medium",
+        "value": "1279px",
+        "purpose": "max-width: editor full width; output and symbol table side by side."
+      },
+      {
+        "name": "narrow",
+        "value": "860px",
+        "purpose": "max-width: Story Time stacks; dateline beat hidden."
+      },
+      {
+        "name": "phone",
+        "value": "719px",
+        "purpose": "max-width: single column; code 14.5px; toolbar two-cell grid."
+      }
+    ],
+    "editions": {
+      "mechanism": "Night tokens apply under :root[data-theme=\"dark\"] and under prefers-color-scheme: dark unless data-theme=\"light\". The toggle persists to localStorage key beki-theme and is applied before first paint.",
+      "unchanged": [
+        "yellow",
+        "on-yellow",
+        "on-red"
+      ]
+    },
+    "icons": {
+      "set": "Phosphor Bold, self-hosted icon font in static/vendor/phosphor (third-party)",
+      "usage": "Always decorative (aria-hidden) and paired with a visible text label."
+    },
+    "vendor": [
+      "static/vendor/fonts (Archivo, Source Serif 4, JetBrains Mono woff2, OFL)",
+      "static/vendor/phosphor (Phosphor Bold icon font)"
+    ]
+  },
+  "components": [
+    {
+      "name": "Run Button",
+      "kind": "button",
+      "refersTo": "button-run",
+      "description": "The single red primary action; runs the program. Stacked condensed label, beki aside, keyboard legend.",
+      "html": "<button class=\"ds-btn-run\" type=\"button\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"square\" stroke-linejoin=\"miter\" aria-hidden=\"true\"><path d=\"M7 4.5v15l12-7.5z\"/></svg><span class=\"ds-btn-run__stack\"><span class=\"ds-btn-run__label\">Run</span><span class=\"ds-btn-run__aside\">Slay ko 'to!</span></span><kbd class=\"ds-btn-run__kbd\">Ctrl &#8629;</kbd></button>",
+      "css": ".ds-btn-run { display: inline-flex; align-items: center; gap: 10px; min-height: 56px; padding: 0 14px 0 18px; background: var(--red, #d0201a); color: var(--on-red, #ffffff); border: 2px solid var(--red, #d0201a); border-radius: 0; font-family: var(--font-ui, Archivo, system-ui, sans-serif); font-weight: 700; cursor: pointer; transition: transform 140ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)), background-color 150ms ease, color 150ms ease; } .ds-btn-run__stack { display: grid; text-align: left; line-height: 1.05; } .ds-btn-run__label { font-family: var(--font-display, Archivo, 'Arial Narrow', sans-serif); font-stretch: 75%; font-weight: 900; font-size: 1.45rem; text-transform: uppercase; } .ds-btn-run__aside { font-size: 0.8125rem; font-weight: 600; } .ds-btn-run__kbd { margin-left: 6px; padding: 3px 6px; border: 1px solid currentColor; font-family: var(--font-code, 'JetBrains Mono', ui-monospace, Consolas, monospace); font-size: 0.75rem; font-weight: 600; } .ds-btn-run:hover { background: var(--ink, #151515); border-color: var(--ink, #151515); color: var(--paper, #eeede9); } .ds-btn-run:focus-visible { outline: 3px solid var(--ink, #151515); outline-offset: 2px; } .ds-btn-run:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action: transparent ruled slug that turns highlighter yellow on hover.",
+      "html": "<button class=\"ds-btn-ghost\" type=\"button\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"square\" stroke-linejoin=\"miter\" aria-hidden=\"true\"><path d=\"M15 4l5 5-9 9H6l-3-3 12-11zM9 9l6 6M11 18h9\"/></svg><span>Clear output</span></button>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 16px; background: transparent; color: var(--ink, #151515); border: 2px solid var(--ink, #151515); border-radius: 0; font-family: var(--font-ui, Archivo, system-ui, sans-serif); font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 140ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)), background-color 150ms ease, color 150ms ease; } .ds-btn-ghost:hover { background: var(--yellow, #ffd60a); color: var(--on-yellow, #151515); border-color: var(--on-yellow, #151515); } .ds-btn-ghost:focus-visible { outline: 3px solid var(--ink, #151515); outline-offset: 2px; } .ds-btn-ghost:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Line Button",
+      "kind": "button",
+      "refersTo": "button-line",
+      "description": "Reverse-bar button shown under an error verdict to jump to the offending line.",
+      "html": "<button class=\"ds-btn-line\" type=\"button\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"square\" stroke-linejoin=\"miter\" aria-hidden=\"true\"><path d=\"M12 3v5M12 16v5M3 12h5M16 12h5M12 7a5 5 0 1 0 0 10 5 5 0 1 0 0-10z\"/></svg><span>Go to line 2</span></button>",
+      "css": ".ds-btn-line { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 16px; background: var(--bar-bg, #151515); color: var(--bar-fg, #eeede9); border: 2px solid var(--ink, #151515); border-radius: 0; font-family: var(--font-ui, Archivo, system-ui, sans-serif); font-weight: 700; font-size: 1rem; cursor: pointer; transition: transform 140ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)), background-color 150ms ease, color 150ms ease; } .ds-btn-line:hover { background: var(--yellow, #ffd60a); color: var(--on-yellow, #151515); border-color: var(--on-yellow, #151515); } .ds-btn-line:focus-visible { outline: 3px solid var(--ink, #151515); outline-offset: 2px; } .ds-btn-line:active { transform: scale(0.97); }"
+    },
+    {
+      "name": "Example Select",
+      "kind": "input",
+      "refersTo": "select",
+      "description": "Native select restyled as a ruled Fresh Sheet field with a label above.",
+      "html": "<label class=\"ds-field\"><span class=\"ds-field__label\">Load an example</span><span class=\"ds-select\"><select><option>Choose a program&#8230;</option><option>Hello, Mhiema</option></select><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"square\" stroke-linejoin=\"miter\" aria-hidden=\"true\"><path d=\"M6 9l6 6 6-6\"/></svg></span></label>",
+      "css": ".ds-field { display: grid; gap: 4px; min-width: 260px; font-family: var(--font-ui, Archivo, system-ui, sans-serif); } .ds-field__label { font-size: 0.8125rem; font-weight: 700; color: var(--ink-2, #45443f); } .ds-select { position: relative; display: block; } .ds-select select { appearance: none; width: 100%; min-height: 48px; padding: 0 40px 0 12px; background: var(--sheet, #f9f8f5); color: var(--ink, #151515); border: 2px solid var(--ink, #151515); border-radius: 0; font: inherit; font-weight: 600; cursor: pointer; } .ds-select select:focus-visible { outline: 3px solid var(--ink, #151515); outline-offset: 2px; } .ds-select svg { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--ink, #151515); }"
+    },
+    {
+      "name": "Dateline Nav",
+      "kind": "nav",
+      "refersTo": "dateline-link",
+      "description": "Masthead dateline row: date, page links with icons, theme toggle with a plain clarifier, closed by the 4px heavy rule.",
+      "html": "<div class=\"ds-dateline\"><p class=\"ds-dateline__date\">Huwebes, Oktubre 15, 2026</p><nav class=\"ds-dateline__nav\" aria-label=\"Page\"><a class=\"ds-dateline__link\" href=\"#\"><svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"square\" stroke-linejoin=\"miter\" aria-hidden=\"true\"><path d=\"M3 5h6a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H3zM21 5h-6a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h7z\"/></svg>Cheat sheet</a><button class=\"ds-dateline__link\" type=\"button\"><svg width=\"17\" height=\"17\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"square\" stroke-linejoin=\"miter\" aria-hidden=\"true\"><path d=\"M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z\"/></svg><span>Night edition</span><span class=\"ds-dateline__aside\">dark mode</span></button></nav></div>",
+      "css": ".ds-dateline { display: flex; align-items: center; justify-content: space-between; gap: 8px 24px; flex-wrap: wrap; padding: 10px 0; border-bottom: 4px solid var(--ink, #151515); font-family: var(--font-ui, Archivo, system-ui, sans-serif); font-size: 0.875rem; font-weight: 600; color: var(--ink, #151515); } .ds-dateline__date { margin: 0; font-variant-numeric: tabular-nums; } .ds-dateline__nav { display: flex; gap: 4px; } .ds-dateline__link { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 10px; background: none; border: 0; color: inherit; font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; transition: background-color 150ms ease; } .ds-dateline__link:hover { background: var(--yellow, #ffd60a); color: var(--on-yellow, #151515); } .ds-dateline__link:focus-visible { outline: 3px solid var(--ink, #151515); outline-offset: 2px; } .ds-dateline__aside { font-weight: 500; color: var(--ink-3, #66645e); }"
+    },
+    {
+      "name": "Keyword Chip",
+      "kind": "chip",
+      "refersTo": "keyword-chip",
+      "description": "Cheat-sheet keyword in its syntax ink; tap to insert at the editor caret.",
+      "html": "<div class=\"ds-chips\"><button class=\"ds-kw ds-kw--type\" type=\"button\">borta</button><button class=\"ds-kw ds-kw--ctl\" type=\"button\">kunwari</button><button class=\"ds-kw ds-kw--end\" type=\"button\">periodt</button><button class=\"ds-kw ds-kw--lit\" type=\"button\">korik</button><button class=\"ds-kw\" type=\"button\">dagdag</button></div>",
+      "css": ".ds-chips { display: flex; flex-wrap: wrap; gap: 8px; } .ds-kw { display: inline-flex; align-items: center; min-height: 32px; padding: 2px 8px; font-family: var(--font-code, 'JetBrains Mono', ui-monospace, Consolas, monospace); font-variant-ligatures: none; font-size: 0.9375rem; font-weight: 600; color: var(--ink, #151515); background: var(--sheet, #f9f8f5); border: 1px solid var(--rule-soft, #c9c6be); border-radius: 0; cursor: pointer; transition: background-color 150ms ease, border-color 150ms ease, transform 140ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)); } .ds-kw--type { color: var(--syn-type, #1f4fb8); } .ds-kw--ctl { color: var(--syn-ctl, #7a1fa2); } .ds-kw--end { color: var(--syn-end, #806400); font-style: italic; } .ds-kw--lit { color: var(--syn-num, #a3480b); } .ds-kw:hover { background: var(--yellow, #ffd60a); border-color: var(--on-yellow, #151515); color: var(--on-yellow, #151515); } .ds-kw:focus-visible { outline: 3px solid var(--ink, #151515); outline-offset: 2px; } .ds-kw:active { transform: scale(0.96); }"
+    },
+    {
+      "name": "Section Bar + Data Box",
+      "kind": "card",
+      "refersTo": "section-bar",
+      "description": "Reverse-type bar heading a ruled Fresh Sheet box: the house replacement for cards.",
+      "html": "<section class=\"ds-sec\"><div class=\"ds-bar\"><h2 class=\"ds-bar__title\">Ang Chika</h2><p class=\"ds-bar__meta\">Program output</p></div><ol class=\"ds-box\"><li>Welcome sa BekiLang Studio, Mhiema!</li><li>Perfect score ang Vaklang twooo!</li></ol></section>",
+      "css": ".ds-sec { max-width: 520px; } .ds-bar { display: flex; align-items: baseline; gap: 6px 14px; flex-wrap: wrap; padding: 7px 12px 6px; background: var(--bar-bg, #151515); color: var(--bar-fg, #eeede9); border-top: 2px solid var(--ink, #151515); } .ds-bar__title { margin: 0; font-family: var(--font-display, Archivo, 'Arial Narrow', sans-serif); font-stretch: 62%; font-weight: 900; font-size: 1.6rem; line-height: 1; text-transform: uppercase; letter-spacing: 0.005em; } .ds-bar__meta { margin: 0; font-family: var(--font-ui, Archivo, system-ui, sans-serif); font-size: 0.875rem; font-weight: 500; opacity: 0.82; } .ds-box { margin: 0; padding: 10px 14px 10px 3.2em; background: var(--sheet, #f9f8f5); color: var(--ink, #151515); border: 2px solid var(--ink, #151515); border-top: 0; font-family: var(--font-code, 'JetBrains Mono', ui-monospace, Consolas, monospace); font-size: 0.9375rem; line-height: 1.6; } .ds-box li::marker { color: var(--ink-3, #66645e); }"
+    },
+    {
+      "name": "Verdict Headline",
+      "kind": "custom",
+      "refersTo": "headline-shout",
+      "description": "Front-page verdict: condensed all-caps headline whose first phrase is a yellow shout on success, red on error.",
+      "html": "<div class=\"ds-verdict\"><h2 class=\"ds-headline\"><span class=\"ds-shout\">Kabog!</span> Walang error, sis!</h2><p class=\"ds-deck\">2 lines of chika, 2 variables in memory. Pak!</p><h2 class=\"ds-headline ds-headline--error\"><span class=\"ds-shout\">Jusko day!</span> <span class=\"ds-rest\">Semantic error sa linya 2</span></h2></div>",
+      "css": ".ds-verdict { display: grid; gap: 14px; max-width: 560px; color: var(--ink, #151515); } .ds-headline { margin: 0; font-family: var(--font-display, Archivo, 'Arial Narrow', sans-serif); font-stretch: 62%; font-weight: 900; font-size: clamp(2.5rem, 4.4vw, 4.4rem); line-height: 0.95; letter-spacing: -0.005em; text-transform: uppercase; text-wrap: balance; } .ds-shout { padding: 0 0.12em; background: var(--yellow, #ffd60a); color: var(--on-yellow, #151515); -webkit-box-decoration-break: clone; box-decoration-break: clone; } .ds-headline--error .ds-shout { background: var(--red, #d0201a); color: var(--on-red, #ffffff); } .ds-headline--error .ds-rest { color: var(--red-text, #be1c15); } .ds-deck { margin: 0; font-family: var(--font-body, 'Source Serif 4', Georgia, serif); font-size: 1.125rem; line-height: 1.45; color: var(--ink-2, #45443f); max-width: 62ch; }"
+    },
+    {
+      "name": "Phase Strip",
+      "kind": "custom",
+      "refersTo": "phase-cell",
+      "description": "Three compiler-phase cells under a heavy rule; states restyle in place like a departure board.",
+      "html": "<ol class=\"ds-phases\"><li class=\"ds-phase ds-phase--pass\"><span class=\"ds-phase__name\">Lexer</span><span class=\"ds-phase__role\">Tagabasa ng chismis</span><span class=\"ds-phase__state\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"square\" stroke-linejoin=\"miter\" aria-hidden=\"true\"><path d=\"M5 12.5l4.5 4.5L19 7.5\"/></svg>Pasado</span></li><li class=\"ds-phase ds-phase--pass\"><span class=\"ds-phase__name\">Parser</span><span class=\"ds-phase__role\">Ang Marites</span><span class=\"ds-phase__state\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"square\" stroke-linejoin=\"miter\" aria-hidden=\"true\"><path d=\"M5 12.5l4.5 4.5L19 7.5\"/></svg>Pasado</span></li><li class=\"ds-phase ds-phase--fail\"><span class=\"ds-phase__name\">Semantics</span><span class=\"ds-phase__role\">Judge ng katotohanan</span><span class=\"ds-phase__state\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.6\" stroke-linecap=\"square\" stroke-linejoin=\"miter\" aria-hidden=\"true\"><path d=\"M6 6l12 12M18 6L6 18\"/></svg>Sablay</span></li></ol>",
+      "css": ".ds-phases { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 560px; border-top: 4px solid var(--ink, #151515); font-family: var(--font-ui, Archivo, system-ui, sans-serif); color: var(--ink, #151515); } .ds-phase { display: grid; align-content: start; gap: 2px; padding: 10px 12px 12px; border-bottom: 1px solid var(--rule-soft, #c9c6be); transition: background-color 180ms ease, color 180ms ease; } .ds-phase + .ds-phase { border-left: 1px solid var(--rule-soft, #c9c6be); } .ds-phase__name { font-family: var(--font-display, Archivo, 'Arial Narrow', sans-serif); font-stretch: 75%; font-weight: 900; font-size: 1.25rem; line-height: 1.05; text-transform: uppercase; } .ds-phase__role { font-size: 0.8125rem; line-height: 1.3; color: var(--ink-3, #66645e); } .ds-phase__state { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 0.875rem; font-weight: 700; color: var(--ink-3, #66645e); } .ds-phase--pass { background: var(--bar-bg, #151515); color: var(--bar-fg, #eeede9); } .ds-phase--pass .ds-phase__role, .ds-phase--pass .ds-phase__state { color: var(--bar-fg, #eeede9); opacity: 0.88; } .ds-phase--fail { background: var(--red, #d0201a); color: var(--on-red, #ffffff); } .ds-phase--fail .ds-phase__role, .ds-phase--fail .ds-phase__state { color: var(--on-red, #ffffff); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Chismis Tabloid",
+    "overview": "Every run is today's front page. The Studio is set like a cheap, loud, well-ruled tabloid: grey newsprint stock, ink-black rules, reverse-type section bars, one rationed tabloid red and a highlighter-yellow marker pen. The compiler's verdict is the headline, the three phases are bylined reporters, the symbol table is a data box, and the keyword reference runs at the back as the classifieds. The voice is playful and the furniture is newspaper, but the hierarchy is strict: a visitor reads the verdict at a glance, then follows the stories down.\n\nDensity is editorial rather than dashboard: generous condensed headlines over tight, well-ruled columns of serif prose and monospaced data. Loudness comes from width and weight of type, from reverse bars and from the red, never from glow, gradients or depth. The system explicitly refuses the dark neon IDE-with-tabs default, and the old pink/cyan look is not carried forward.\n\nThere are two editions sharing one structure: the Day edition (newsprint) and the Night edition (dark stock), swapped by tokens only. Night is a recolour of the same paper, not a different product.",
+    "keyCharacteristics": [
+      "Grey newsprint ground with a lighter \"sheet\" for anything the user writes or the compiler prints.",
+      "Heavy condensed all-caps Archivo headlines; Source Serif 4 for prose; JetBrains Mono for code and data.",
+      "Ink rules in three weights carry all structure; no shadows, no radius.",
+      "One rationed red (nameplate, Run, errors) and one highlighter yellow (success shout, hover, selection, focus).",
+      "Reverse-type ink bars head every section.",
+      "Motion is print-like: a headline \"pressed\" in from the top edge and a departure-board flip on the phase strip."
+    ],
+    "rules": [
+      {
+        "name": "The Rationed Red Rule",
+        "body": "Red appears only on the nameplate, the Run button and error states. It never decorates, never marks success, and never fills a container that is not one of those three.",
+        "section": "colors"
+      },
+      {
+        "name": "The Highlighter Rule",
+        "body": "Yellow is a marker pen, not a surface. It marks the success shout, hover, selection and focus; it never becomes a panel, card or section background.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Editions Rule",
+        "body": "Day and Night share every component and differ only in token values. A new surface must read correctly in both by using tokens, never literal greys.",
+        "section": "colors"
+      },
+      {
+        "name": "The Three Presses Rule",
+        "body": "Archivo shouts and labels, Source Serif 4 reports, JetBrains Mono quotes the machine. Code, identifiers, keywords, output and symbol data are always mono; prose about them is always serif.",
+        "section": "typography"
+      },
+      {
+        "name": "The Width Is Volume Rule",
+        "body": "Loudness is set by Archivo's width axis at weight 900: 62% for headlines and bars, 75% for titles and the Run label, normal width for UI. Never fake a headline with a larger regular-width weight.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Rule",
+        "body": "Every number that lines up with another (line numbers, caret position, console counters, level and offset) uses tabular figures.",
+        "section": "typography"
+      },
+      {
+        "name": "The Front Page Rule",
+        "body": "The first viewport always shows the nameplate, the editor with Run, and the verdict. New content goes below the fold as another bylined section, never above the verdict.",
+        "section": "layout"
+      },
+      {
+        "name": "The Ruled Column Rule",
+        "body": "Columns are separated by 1px Soft Rule lines, not by cards, gaps alone or background changes.",
+        "section": "layout"
+      },
+      {
+        "name": "The Flat Newsprint Rule",
+        "body": "No shadows, glows, blurs or gradients on surfaces. If something needs to stand forward, give it a heavier ink rule or put it in a reverse bar.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Sharp Corner Rule",
+        "body": "Radius is 0 everywhere. A rounded corner reads as app chrome and breaks the newsprint.",
+        "section": "shapes"
+      }
+    ],
+    "dos": [
+      "**Do** head every new section with the reverse-type Section Bar: a 62%-width all-caps title plus a plain-language meta line saying what the panel is.",
+      "**Do** keep red for the nameplate, Run and errors; use Headline Red Ink (#be1c15 day, #ff6b5e night) when red is text on paper.",
+      "**Do** use Highlighter Yellow (#ffd60a) with ink text for hover, selection, focus on the editor and the success shout.",
+      "**Do** put user code and compiler output on Fresh Sheet inside a 2px Press Ink box; set it in JetBrains Mono with ligatures off.",
+      "**Do** separate columns with 1px Soft Rule lines and close major bands with the 4px heavy rule.",
+      "**Do** pair every icon with a visible text label and mark the icon aria-hidden.",
+      "**Do** gate hover styles behind fine-pointer media queries and keep colour changes (but drop movement) under reduced motion.",
+      "**Do** define any new colour as a token with both a Day and a Night value."
+    ],
+    "donts": [
+      "**Don't** round corners; radius is 0px everywhere.",
+      "**Don't** add box-shadows, glows, blurs or gradient fills; the only texture is the nameplate halftone.",
+      "**Don't** use red for success, decoration or a second primary button.",
+      "**Don't** use yellow as a panel or section background.",
+      "**Don't** set headlines in regular-width Archivo or in the serif; headlines are 900 weight on the 62% or 75% width axis, all caps.",
+      "**Don't** wrap content in floating cards; hang ruled boxes under a bar instead.",
+      "**Don't** return to the dark neon IDE-with-tabs look or the old pink/cyan palette."
+    ]
+  }
+}
